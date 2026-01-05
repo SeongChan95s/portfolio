@@ -1,0 +1,52 @@
+/* ======
+
+  typography
+
+====== */
+
+/* ------
+
+  font-face
+
+------ */
+
+/* 한글, 숫자, 특수문자 */
+@font-face {
+	font-family: 'Pretendard-variable';
+	src: url('./../../fonts/PretendardVariable.woff2') format('woff2');
+}
+
+/* ------
+
+  basic typography
+
+------ */
+html {
+	font-family: 'Pretendard-variable', sans-serif;
+	line-height: 1.45;
+	letter-spacing: -0.025em;
+	word-spacing: -0.025em;
+	overflow-wrap: break-word;
+	color: var(--black-color-normal);
+
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-text-size-adjust: 100%; /* chrome, safari, opera */
+	-ms-text-size-adjust: 100%; // IE
+	-moz-text-size-adjust: 100%; // firefox
+	-o-text-size-adjust: 100%; // opera 구버전
+}
+
+a {
+	color: inherit;
+	// color: var(--black-color-normal);
+}
+
+/* 
+
+	웹접근성 - IR
+
+*/
+.hidden {
+	@include hidden;
+}
