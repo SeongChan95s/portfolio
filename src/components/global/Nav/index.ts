@@ -1,2 +1,2 @@
-export { default as NavBar } from './NavBar';
+export { default as ToggleNav } from './ToggleNav';
 export { default as TabBar } from './TabBar';

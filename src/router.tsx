@@ -10,6 +10,7 @@ import GlobalPopupGuidePage from './pages/guide/global/GlobalPopupGuidePage';
 import SheetGuidePage from './pages/guide/common/SheetGuidePage';
 import DetailPage from './pages/detail/DetailPage';
 import SubLayout from './layouts/SubLayout';
+import ProjectPage from './pages/project/ProjectPage';
 
 const router = createBrowserRouter([
 	{
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
 			{
 				path: '/about',
 				element: <AboutPage />
+			},
+			{
+				path: '/project',
+				element: <ProjectPage />
 			}
 		]
 	},

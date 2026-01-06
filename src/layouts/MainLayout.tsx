@@ -1,12 +1,12 @@
 import { Outlet } from 'react-router-dom';
-import { NavBar, TabBar } from '../components/global/Nav';
+import { ToggleNav } from '../components/global/Nav';
 
 export default function MainLayout() {
 	return (
 		<>
-			<NavBar />
+			<ToggleNav />
 			<Outlet />
-			<TabBar />
+			{/* <TabBar /> */}
 		</>
 	);
 }
