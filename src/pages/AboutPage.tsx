@@ -4,9 +4,11 @@ export default function AboutPage() {
 	return (
 		<>
 			<Helmet>
-				<title>파티 스케줄러 - About</title>
+				<title>About</title>
 			</Helmet>
-			<div>내용 </div>
+			<div>
+				<h2>About의 본문입니다.</h2>
+			</div>
 		</>
 	);
 }

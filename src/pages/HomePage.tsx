@@ -1,23 +1,17 @@
 import { motion } from 'motion/react';
-import OnePageScroll from '../../features/scroll/OnePageScroll';
+import OnePageScroll from '../features/scroll/OnePageScroll';
 
-export default function ProjectPage() {
+export default function HomePage() {
 	return (
 		<OnePageScroll>
-			<section className="h-full bg-indigo-600 flex items-center justify-center">
+			<section className="h-full bg-indigo-600 flex items-center justify-center pr-[10vw] pl-[10vw]">
 				<motion.div
 					initial={{ opacity: 0, y: 50 }}
 					whileInView={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
 					className="flex flex-col items-center justify-center text-center bg-indigo-600">
-					<h1 className="text-6xl font-bold mb-4">Make It Smooth.</h1>
-					<p className="text-2xl text-indigo-100">Full Page Scrolling with Motion</p>
+					<h3 className="text-6xl font-bold mb-4">SMART CODE</h3>
 				</motion.div>
-				<motion.div
-					className="w-100 h-100 flex-none bg-amber-50"
-					transition={{ type: 'spring' }}
-					animate={{ x: 300 }}
-				/>
 			</section>
 
 			<section className="flex flex-col h-full items-center justify-center text-center bg-purple-700">

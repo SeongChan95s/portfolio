@@ -1,16 +1,21 @@
-import HomePage from './pages/main/HomePage';
-import AboutPage from './pages/main/AboutPage';
 import NotFoundPage from './pages/NotFoundPage';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import GuideLayout from './layouts/GuideLayout';
 import MainLayout from './layouts/MainLayout';
-import ComponentGuidePage from './pages/guide/common/ComponentGuidePage';
-import PopupGuidePage from './pages/guide/common/PopupGuidePage';
-import GlobalPopupGuidePage from './pages/guide/global/GlobalPopupGuidePage';
-import SheetGuidePage from './pages/guide/common/SheetGuidePage';
-import DetailPage from './pages/detail/DetailPage';
-import SubLayout from './layouts/SubLayout';
-import ProjectPage from './pages/project/ProjectPage';
+import DetailPage from './pages/DetailPage';
+import AboutPage from './pages/AboutPage';
+import HomePage from './pages/HomePage';
+import ProjectPage from './pages/ProjectPage';
+import BlogPage from './pages/BlogPage';
+import ContactPage from './pages/ContactPage';
+import { lazy } from 'react';
+
+const ComponentGuidePage = lazy(() => import('./pages/guide/common/ComponentGuidePage'));
+const PopupGuidePage = lazy(() => import('./pages/guide/common/PopupGuidePage'));
+const GlobalPopupGuidePage = lazy(
+	() => import('./pages/guide/global/GlobalPopupGuidePage')
+);
+const SheetGuidePage = lazy(() => import('./pages/guide/common/SheetGuidePage'));
 
 const router = createBrowserRouter([
 	{
@@ -27,12 +32,15 @@ const router = createBrowserRouter([
 			{
 				path: '/project',
 				element: <ProjectPage />
-			}
-		]
-	},
-	{
-		element: <SubLayout />,
-		children: [
+			},
+			{
+				path: '/blog',
+				element: <BlogPage />
+			},
+			{
+				path: '/contact',
+				element: <ContactPage />
+			},
 			{
 				path: '/detail/:id',
 				element: <DetailPage />

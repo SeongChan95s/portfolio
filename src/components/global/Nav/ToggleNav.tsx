@@ -106,23 +106,21 @@ export default function ToggleNav() {
 	};
 
 	return (
-		<>
-			<motion.nav
-				className="fixed inset-0 z-99 select-none pointer-events-none"
-				initial={false}
-				animate={
-					isNavigating ? 'navigating' : isResetting ? 'reset' : isOpen ? 'open' : 'closed'
-				}
-				custom={height}
-				ref={navBarRef}>
-				<motion.div
-					className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
-					variants={backgroundVariants}
-				/>
-				<ToggleContainer onNavigate={handleNavigate} />
-				<ToggleButton toggle={() => setIsOpen(!isOpen)} />
-			</motion.nav>
-		</>
+		<motion.nav
+			className="fixed inset-0 z-99 select-none pointer-events-none"
+			initial={false}
+			animate={
+				isNavigating ? 'navigating' : isResetting ? 'reset' : isOpen ? 'open' : 'closed'
+			}
+			custom={height}
+			ref={navBarRef}>
+			<motion.div
+				className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
+				variants={backgroundVariants}
+			/>
+			<ToggleContainer onNavigate={handleNavigate} />
+			<ToggleButton toggle={() => setIsOpen(!isOpen)} />
+		</motion.nav>
 	);
 }
 
@@ -135,21 +133,37 @@ function ToggleContainer({ onNavigate }: { onNavigate: () => void }) {
 		<motion.div
 			className="toggle-nav-container relative w-full h-full pointer-events-auto"
 			variants={navVariants}>
-			<motion.div className="flex flex-col justify-center h-full pr-[10vw] pl-[10vw] gap-8">
+			<motion.div className="flex flex-col justify-center items-start h-full pr-[10vw] pl-[10vw] gap-[clamp(12px,0.8vw,24px)]">
 				<motion.div variants={itemVariants}>
 					<NavLink
 						to="/"
-						className="text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-red-500"
+						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
 						onClick={handleClick}>
 						HOME
 					</NavLink>
 				</motion.div>
 				<motion.div variants={itemVariants}>
 					<NavLink
+						to="/about"
+						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
+						onClick={handleClick}>
+						ABOUT
+					</NavLink>
+				</motion.div>
+				<motion.div variants={itemVariants}>
+					<NavLink
 						to="/project"
-						className="text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-red-400 transition-colors [.active]:text-red-500"
+						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
 						onClick={handleClick}>
 						PROJECT
+					</NavLink>
+				</motion.div>
+				<motion.div variants={itemVariants}>
+					<NavLink
+						to="/blog"
+						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
+						onClick={handleClick}>
+						BLOG
 					</NavLink>
 				</motion.div>
 			</motion.div>
