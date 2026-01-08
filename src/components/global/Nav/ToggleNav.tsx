@@ -1,33 +1,30 @@
 import { useRef, useState } from 'react';
 import useViewportDimensions from '../../../hooks/useViewportDimensions';
 import * as motion from 'motion/react-client';
+import { AnimatePresence } from 'motion/react';
 import { type Variants } from 'motion';
 import { NavLink } from 'react-router-dom';
 
-const navVariants = {
+const navVariants: Variants = {
 	open: {
 		opacity: 1,
-		display: 'block',
 		transition: { delayChildren: 0.5, staggerChildren: 0.1 }
 	},
 	closed: {
 		opacity: 0,
-		display: 'none',
-		transition: { delayChildren: 0.5, staggerChildren: 0.05, staggerDirection: -1 }
+		transition: { duration: 0.3 }
 	},
 	navigating: {
 		opacity: 0,
-		display: 'block',
 		transition: { duration: 0.4 }
 	},
 	reset: {
 		opacity: 0,
-		display: 'none',
 		transition: { duration: 0 }
 	}
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
 	open: {
 		y: 0,
 		opacity: 1,
@@ -118,20 +115,43 @@ export default function ToggleNav() {
 				className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
 				variants={backgroundVariants}
 			/>
-			<ToggleContainer onNavigate={handleNavigate} />
+			<AnimatePresence>
+				{isOpen && (
+					<ToggleContainer
+						key="toggle-container"
+						onNavigate={handleNavigate}
+						isNavigating={isNavigating}
+						isResetting={isResetting}
+					/>
+				)}
+			</AnimatePresence>
+
 			<ToggleButton toggle={() => setIsOpen(!isOpen)} />
 		</motion.nav>
 	);
 }
 
-function ToggleContainer({ onNavigate }: { onNavigate: () => void }) {
+function ToggleContainer({
+	onNavigate,
+	isNavigating,
+	isResetting
+}: {
+	onNavigate: () => void;
+	isNavigating: boolean;
+	isResetting: boolean;
+}) {
 	const handleClick = () => {
 		onNavigate();
 	};
 
+	const currentState = isNavigating ? 'navigating' : isResetting ? 'reset' : 'open';
+
 	return (
 		<motion.div
 			className="toggle-nav-container relative w-full h-full pointer-events-auto"
+			initial="closed"
+			animate={currentState}
+			exit="closed"
 			variants={navVariants}>
 			<motion.div className="flex flex-col justify-center items-start h-full pr-[10vw] pl-[10vw] gap-[clamp(12px,0.8vw,24px)]">
 				<motion.div variants={itemVariants}>
