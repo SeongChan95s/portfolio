@@ -1,5 +1,6 @@
-@import 'tailwindcss';
 @layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
 
 @theme static {
 	/* color */
@@ -47,6 +48,8 @@
 	--spacing: 0.0625rem;
 
 	/* typography */
+	--font-sans: 'Pretendard Variable', 'Roboto', sans-serif
+
 	--text-headline-1: 1.5rem;
 	--text-headline-1--font-weight: 700;
 	--text-headline-1--line-height: 1.35;

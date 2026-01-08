@@ -10,4 +10,12 @@
 	--header-layout-sm: #{$header-layout-sm};
 	--header-layout-md: #{$header-layout-md};
 	--header-layout-lg: #{$header-layout-lg};
+
+	@include desktop {
+		--inner: 7vw;
+	}
+
+	@include tablet {
+		--inner: 10vw;
+	}
 }

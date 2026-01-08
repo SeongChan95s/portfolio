@@ -4,10 +4,11 @@ export default function ProjectPage() {
 	return (
 		<>
 			<Helmet>
-				<title>Project</title>
+				<title>SeongChan | Project</title>
 			</Helmet>
-			<div>
-				<h2>Project의 본문입니다.</h2>
+			<div className="inner pt-[12vw]">
+				<h2 className="text-[6vw] font-bold tracking-tight">Project</h2>
+				<section></section>
 			</div>
 		</>
 	);
