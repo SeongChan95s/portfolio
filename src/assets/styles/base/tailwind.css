@@ -1,6 +1,6 @@
 @layer theme, base, components, utilities;
-@import "tailwindcss/theme.css" layer(theme);
-@import "tailwindcss/utilities.css" layer(utilities);
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
 
 @theme static {
 	/* color */
@@ -48,7 +48,10 @@
 	--spacing: 0.0625rem;
 
 	/* typography */
-	--font-sans: 'Pretendard Variable', 'Roboto', sans-serif
+	--font-sans: 'Pretendard Variable', 'Roboto', sans-serif;
+	--font-heebo: 'Heebo';
+	--font-bebasNeue: 'BebasNeue';
+	--font-markMyWords: 'MarkMyWords';
 
 	--text-headline-1: 1.5rem;
 	--text-headline-1--font-weight: 700;

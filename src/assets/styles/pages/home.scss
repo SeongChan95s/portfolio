@@ -1,0 +1,145 @@
+@use 'sass:math';
+
+.home-page {
+	.intro-section {
+		background: url('https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/Home%2Fintro_bg.jpg?alt=media&token=e1aeb562-0610-493c-8cd2-2555095e7558')
+			center/cover no-repeat;
+		// transform: rotateZ(45deg);
+
+		.circle-wrap {
+			position: absolute;
+			top: 3vw;
+			right: 7vw;
+			display: flex;
+
+			.nested-circle {
+				width: 10vw;
+				height: 10vw;
+				border: 1px solid var(--color-white);
+				border-radius: 100%;
+
+				&:nth-child(2) {
+					margin: 0 -2.5vw;
+				}
+			}
+		}
+
+		.star-wrap {
+			position: absolute;
+			width: 100vw;
+			height: 150svh;
+			transform: rotateZ(45deg);
+			$shooting-time: 3000ms;
+
+			.shooting-star {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				height: 2px;
+				background: linear-gradient(-45deg, rgb(255, 255, 255), rgba(0, 0, 255, 0));
+				border-radius: 999px;
+				filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
+				animation: tail $shooting-time ease-in-out infinite,
+					shooting $shooting-time ease-in-out infinite;
+
+				&::before {
+					content: '';
+					position: absolute;
+					top: calc(50% - 1px);
+					right: 0;
+					height: 2px;
+					background: linear-gradient(
+						-45deg,
+						rgba(0, 0, 255, 0),
+						rgb(255, 255, 255),
+						rgba(0, 0, 255, 0)
+					);
+					transform: translateX(50%) rotateZ(45deg);
+					border-radius: 100%;
+					animation: shining $shooting-time ease-in-out infinite;
+				}
+
+				&::after {
+					content: '';
+					position: absolute;
+					top: calc(50% - 1px);
+					right: 0;
+					height: 2px;
+					background: linear-gradient(
+						-45deg,
+						rgba(0, 0, 255, 0),
+						rgb(255, 255, 255),
+						rgba(0, 0, 255, 0)
+					);
+					transform: translateX(50%) rotateZ(45deg);
+					border-radius: 100%;
+					animation: shining $shooting-time ease-in-out infinite;
+					transform: translateX(50%) rotateZ(-45deg);
+				}
+
+				@for $i from 1 through 20 {
+					&:nth-child(#{$i}) {
+						$delay: math.random(9999) + 0ms;
+						top: calc(50% - #{math.random(200) - 50vh});
+						left: calc(50% - #{math.random(50) * 0.5vw});
+						animation-delay: $delay;
+						opacity: calc(math.random(50) / 100 + 0.5);
+
+						&::before,
+						&::after {
+							animation-delay: $delay;
+						}
+					}
+				}
+			}
+
+			@keyframes tail {
+				0% {
+					width: 0;
+				}
+
+				30% {
+					width: 100px;
+				}
+
+				100% {
+					width: 0;
+				}
+			}
+
+			@keyframes shining {
+				0% {
+					width: 0;
+				}
+
+				50% {
+					width: 30px;
+				}
+
+				100% {
+					width: 0;
+				}
+			}
+
+			@keyframes shooting {
+				0% {
+					transform: translateX(0);
+				}
+
+				100% {
+					transform: translateX(300px);
+				}
+			}
+
+			@keyframes sky {
+				0% {
+					transform: rotate(45deg);
+				}
+
+				100% {
+					transform: rotate(45 + 360deg);
+				}
+			}
+		}
+	}
+}

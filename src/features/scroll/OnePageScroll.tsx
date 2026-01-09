@@ -6,6 +6,7 @@ interface OnePageScrollProps {
 	children: ReactNode;
 	onSectionChange?: (index: number) => void;
 	animationDuration?: number;
+	disabled?: boolean;
 }
 
 /**
@@ -15,14 +16,16 @@ interface OnePageScrollProps {
 function OnePageScroll({
 	children,
 	onSectionChange,
-	animationDuration = 0.7
+	animationDuration = 0.7,
+	disabled = false
 }: OnePageScrollProps) {
 	const sections = React.Children.toArray(children);
 
 	const { activeSection, scrollToSection, controls } = useOnePageScroll({
 		sectionCount: sections.length,
 		onSectionChange,
-		animationDuration
+		animationDuration,
+		disabled
 	});
 
 	const switchBulletClassName = (index: number, activeIndex: number) => {

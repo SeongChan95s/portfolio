@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useViewportDimensions from '../../../hooks/useViewportDimensions';
 import * as motion from 'motion/react-client';
 import { AnimatePresence } from 'motion/react';
 import { type Variants } from 'motion';
 import { NavLink } from 'react-router-dom';
+import { useNavStore } from '../../../stores/useNavStore';
 
 const navVariants: Variants = {
 	open: {
@@ -86,16 +87,28 @@ const backgroundVariants: Variants = {
 };
 
 export default function ToggleNav() {
-	const [isOpen, setIsOpen] = useState(false);
+	const { isNavOpen, setNavOpen } = useNavStore();
 	const [isNavigating, setIsNavigating] = useState(false);
 	const [isResetting, setIsResetting] = useState(false);
 	const navBarRef = useRef<HTMLDivElement>(null);
 	const { height } = useViewportDimensions();
 
+	useEffect(() => {
+		if (isNavOpen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
+		}
+
+		return () => {
+			document.body.style.overflow = '';
+		};
+	}, [isNavOpen]);
+
 	const handleNavigate = () => {
 		setIsNavigating(true);
 		setTimeout(() => {
-			setIsOpen(false);
+			setNavOpen(false);
 			setIsNavigating(false);
 			setIsResetting(true);
 			setTimeout(() => setIsResetting(false), 300);
@@ -107,7 +120,13 @@ export default function ToggleNav() {
 			className="fixed inset-0 z-99 select-none pointer-events-none"
 			initial={false}
 			animate={
-				isNavigating ? 'navigating' : isResetting ? 'reset' : isOpen ? 'open' : 'closed'
+				isNavigating
+					? 'navigating'
+					: isResetting
+					? 'reset'
+					: isNavOpen
+					? 'open'
+					: 'closed'
 			}
 			custom={height}
 			ref={navBarRef}>
@@ -116,7 +135,7 @@ export default function ToggleNav() {
 				variants={backgroundVariants}
 			/>
 			<AnimatePresence>
-				{isOpen && (
+				{isNavOpen && (
 					<ToggleContainer
 						key="toggle-container"
 						onNavigate={handleNavigate}
@@ -126,7 +145,7 @@ export default function ToggleNav() {
 				)}
 			</AnimatePresence>
 
-			<ToggleButton toggle={() => setIsOpen(!isOpen)} />
+			<ToggleButton toggle={() => setNavOpen(!isNavOpen)} />
 		</motion.nav>
 	);
 }
@@ -194,13 +213,13 @@ function ToggleContainer({
 function ToggleButton({ toggle }: { toggle: () => void }) {
 	return (
 		<button
-			className="toggle-button cursor-pointer absolute top-9 right-9 w-52 h-52 flex justify-center items-center rounded-full bg-transparent pointer-events-auto"
+			className="toggle-button cursor-pointer absolute top-9 right-9 w-52 h-52 flex justify-center items-center rounded-full bg-transparent pointer-events-auto backdrop-blur-[20px]"
 			onClick={toggle}>
 			<svg width="1.4375rem" height="1.4375rem" viewBox="0 0 23 23">
 				<Path
 					variants={{
 						closed: { d: 'M 2 2.5 L 20 2.5' },
-						open: { d: 'M 3 16.5 L 17 2.5', stroke: 'white' }
+						open: { d: 'M 3 16.5 L 17 2.5' }
 					}}
 				/>
 				<Path
@@ -214,7 +233,7 @@ function ToggleButton({ toggle }: { toggle: () => void }) {
 				<Path
 					variants={{
 						closed: { d: 'M 2 16.346 L 20 16.346' },
-						open: { d: 'M 3 2.5 L 17 16.346', stroke: 'white' }
+						open: { d: 'M 3 2.5 L 17 16.346' }
 					}}
 				/>
 			</svg>
@@ -231,6 +250,7 @@ interface PathProps {
 function Path(props: PathProps) {
 	return (
 		<motion.path
+			className="stroke-white"
 			fill="transparent"
 			strokeWidth="3"
 			stroke="black"

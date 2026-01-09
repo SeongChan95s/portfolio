@@ -5,6 +5,7 @@ interface UseOnePageScrollProps {
 	sectionCount: number;
 	onSectionChange?: (index: number) => void;
 	animationDuration?: number;
+	disabled?: boolean;
 }
 
 interface UseOnePageScrollReturn {
@@ -20,7 +21,8 @@ interface UseOnePageScrollReturn {
 export function useOnePageScroll({
 	sectionCount,
 	onSectionChange,
-	animationDuration = 0.7
+	animationDuration = 0.7,
+	disabled = false
 }: UseOnePageScrollProps): UseOnePageScrollReturn {
 	const [activeSection, setActiveSection] = useState(0);
 	const [isScrolling, setIsScrolling] = useState(false);
@@ -51,7 +53,7 @@ export function useOnePageScroll({
 
 	const handleWheel = useCallback(
 		(e: WheelEvent) => {
-			if (isScrolling) return;
+			if (disabled || isScrolling) return;
 
 			if (e.deltaY > 50) {
 				scrollToSection(activeSection + 1);
@@ -59,7 +61,7 @@ export function useOnePageScroll({
 				scrollToSection(activeSection - 1);
 			}
 		},
-		[activeSection, isScrolling, scrollToSection]
+		[disabled, activeSection, isScrolling, scrollToSection]
 	);
 
 	const handleTouchStart = (e: TouchEvent) => {
@@ -68,7 +70,7 @@ export function useOnePageScroll({
 
 	const handleTouchEnd = useCallback(
 		(e: TouchEvent) => {
-			if (isScrolling) return;
+			if (disabled || isScrolling) return;
 			const touchEndY = e.changedTouches[0].clientY;
 			const deltaY = touchStartY.current - touchEndY;
 
@@ -80,7 +82,7 @@ export function useOnePageScroll({
 				}
 			}
 		},
-		[activeSection, isScrolling, scrollToSection]
+		[disabled, activeSection, isScrolling, scrollToSection]
 	);
 
 	useEffect(() => {
@@ -102,7 +104,7 @@ export function useOnePageScroll({
 	// 키보드 조작
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
-			if (isScrolling) return;
+			if (disabled || isScrolling) return;
 			if (e.key === 'ArrowDown' || e.key === 'PageDown') {
 				e.preventDefault();
 				scrollToSection(activeSection + 1);
@@ -114,7 +116,7 @@ export function useOnePageScroll({
 
 		window.addEventListener('keydown', handleKeyDown);
 		return () => window.removeEventListener('keydown', handleKeyDown);
-	}, [activeSection, isScrolling, scrollToSection]);
+	}, [disabled, activeSection, isScrolling, scrollToSection]);
 
 	return {
 		activeSection,
