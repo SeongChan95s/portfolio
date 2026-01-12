@@ -2,9 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import * as motion from 'motion/react-client';
 import type { Transition } from 'motion';
-import { AnimatePresence } from 'motion/react';
+import { AnimatePresence, stagger } from 'motion/react';
 import { RollupButton } from '../components/global/Button';
 import { Image } from '../components/common/Image';
+import { Link } from 'react-router-dom';
+import { IconArrowStick } from '../components/common/Icon';
 
 const initialTabs = {
 	All: true,
@@ -139,13 +141,21 @@ export default function ProjectPage() {
 
 				<ul className="grid grid-cols-2 gap-[3vw] mt-[4vw]">
 					<AnimatePresence initial={false}>
-						{projects.map(project => (
+						{projects.map((project, index) => (
 							<motion.li
 								key={project.id}
 								layout
 								transition={spring}
 								initial={{ y: 100, opacity: 0 }}
-								animate={{ y: 0, opacity: 1 }}>
+								whileInView={{
+									y: 0,
+									opacity: 1,
+									transition: {
+										duration: 0.5,
+										delay: index * 0.1
+									}
+								}}
+								viewport={{ once: false, amount: 0.3 }}>
 								<div className="aspect-square rounded-xl overflow-hidden">
 									<Image
 										className="w-full h-full object-cover"
@@ -153,15 +163,23 @@ export default function ProjectPage() {
 										alt=""
 									/>
 								</div>
-								<h4 className="mt-[1.8vw] text-[max(1.6vw,17px)] font-semibold">
+								<h4 className="mt-[clamp(8px,1.563vw,22px)] text-[clamp(14.5px,2.344vw,22px)] font-semibold">
 									{project.name}
 								</h4>
-								<p className="flex flex-wrap gap-x-8 text-[max(1.3vw,12px)]">
+								<p className="flex flex-wrap gap-x-8 mt-[clamp(2px,0.521vw,22px)] text-[clamp(11px,1.563vw,14px)] font-medium text-gray-500">
 									{project.category.map(el => (
 										<span key={el}>{el}</span>
 									))}
 								</p>
-								<p className="mt-[0.5vw] text-[max(1.5vw,13px)]">{project.desc}</p>
+								<p className="mt-[0.5vw] text-[max(1.5vw,13px)] font-normal text-gray-900">
+									{project.desc}
+								</p>
+								<Link
+									to={project.link}
+									className="flex gap-4 items-center text-[max(1.6vw,12px)]">
+									자세히보기
+									<IconArrowStick className="w-[max(1.6vw,12px)] h-auto" />
+								</Link>
 							</motion.li>
 						))}
 					</AnimatePresence>
