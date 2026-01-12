@@ -116,37 +116,49 @@ export default function ToggleNav() {
 	};
 
 	return (
-		<motion.nav
-			className="fixed inset-0 z-99 select-none pointer-events-none"
-			initial={false}
-			animate={
-				isNavigating
-					? 'navigating'
-					: isResetting
-					? 'reset'
-					: isNavOpen
-					? 'open'
-					: 'closed'
-			}
-			custom={height}
-			ref={navBarRef}>
-			<motion.div
-				className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
-				variants={backgroundVariants}
+		<>
+			<motion.nav
+				className="fixed inset-0 z-99 select-none pointer-events-none"
+				initial={false}
+				animate={
+					isNavigating
+						? 'navigating'
+						: isResetting
+						? 'reset'
+						: isNavOpen
+						? 'open'
+						: 'closed'
+				}
+				custom={height}
+				ref={navBarRef}>
+				<motion.div
+					className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
+					variants={backgroundVariants}
+				/>
+				<AnimatePresence>
+					{isNavOpen && (
+						<ToggleContainer
+							key="toggle-container"
+							onNavigate={handleNavigate}
+							isNavigating={isNavigating}
+							isResetting={isResetting}
+						/>
+					)}
+				</AnimatePresence>
+			</motion.nav>
+			<ToggleButton
+				animate={
+					isNavigating
+						? 'navigating'
+						: isResetting
+						? 'reset'
+						: isNavOpen
+						? 'open'
+						: 'closed'
+				}
+				toggle={() => setNavOpen(!isNavOpen)}
 			/>
-			<AnimatePresence>
-				{isNavOpen && (
-					<ToggleContainer
-						key="toggle-container"
-						onNavigate={handleNavigate}
-						isNavigating={isNavigating}
-						isResetting={isResetting}
-					/>
-				)}
-			</AnimatePresence>
-
-			<ToggleButton toggle={() => setNavOpen(!isNavOpen)} />
-		</motion.nav>
+		</>
 	);
 }
 
@@ -210,12 +222,16 @@ function ToggleContainer({
 	);
 }
 
-function ToggleButton({ toggle }: { toggle: () => void }) {
+function ToggleButton({ animate, toggle }: { animate: string; toggle: () => void }) {
 	return (
 		<button
-			className="toggle-button cursor-pointer absolute top-9 right-9 w-52 h-52 flex justify-center items-center rounded-full bg-transparent pointer-events-auto backdrop-blur-[20px]"
+			className="toggle-button cursor-pointer absolute top-9 right-9 w-52 h-52 flex justify-center items-center pointer-events-auto mix-blend-difference z-99"
 			onClick={toggle}>
-			<svg width="1.4375rem" height="1.4375rem" viewBox="0 0 23 23">
+			<motion.svg
+				animate={animate}
+				width="1.4375rem"
+				height="1.4375rem"
+				viewBox="0 0 23 23">
 				<Path
 					variants={{
 						closed: { d: 'M 2 2.5 L 20 2.5' },
@@ -236,7 +252,7 @@ function ToggleButton({ toggle }: { toggle: () => void }) {
 						open: { d: 'M 3 2.5 L 17 16.346' }
 					}}
 				/>
-			</svg>
+			</motion.svg>
 		</button>
 	);
 }
@@ -250,11 +266,9 @@ interface PathProps {
 function Path(props: PathProps) {
 	return (
 		<motion.path
-			className="stroke-white"
 			fill="transparent"
 			strokeWidth="3"
-			stroke="black"
-			// stroke="hsl(0, 0%, 18%)"
+			stroke="white"
 			strokeLinecap="round"
 			{...props}
 		/>
