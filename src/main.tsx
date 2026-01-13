@@ -12,6 +12,7 @@ import Wrapper from './Wrapper';
 import { matchMediaListener } from './utils/matchMedia';
 import ReactLenis from 'lenis/react';
 import './features/gsap/initialGSAP';
+import CursorFollower from './components/global/Cursor/CursorFollower';
 
 matchMediaListener();
 
@@ -35,5 +36,6 @@ createRoot(document.getElementById('root')!).render(
 		<Wrapper>
 			<Router />
 		</Wrapper>
+		<CursorFollower />
 	</HelmetProvider>
 );

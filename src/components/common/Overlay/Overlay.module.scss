@@ -1,17 +1,18 @@
 @layer components {
 	.overlay {
-		@include layout-width;
+		position: fixed;
+		inset: 0;
 		&[class*='-enter'] {
 			background: transparent;
 			&[class*='-active'],
 			&[class*='-done'] {
-				background-color: rgba(32, 32, 32, 0.6);
+				background-color: rgba(16, 16, 16, 0.9);
 				backdrop-filter: blur(10px) saturate(2);
 				transition: background 0.4s ease, backdrop-filter 0.4s ease;
 			}
 		}
 		&[class*='-exit'] {
-			background-color: rgba(32, 32, 32, 0.6);
+			background-color: rgba(16, 16, 16, 0.9);
 			backdrop-filter: blur(10px) saturate(2);
 			&[class*='-active'],
 			&[class*='-done'] {

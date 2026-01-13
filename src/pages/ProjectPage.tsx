@@ -5,10 +5,12 @@ import type { Transition } from 'motion';
 import { AnimatePresence } from 'motion/react';
 import { RollupButton } from '../components/global/Button';
 import { Image } from '../components/common/Image';
-import { Link } from 'react-router-dom';
-import { IconArrowStick } from '../components/common/Icon';
 import { initialProjects } from '../constants/project';
 import { useMatchMediaStore } from '../stores/useMatchMediaStore';
+import ProjectDetailModal, {
+	useProjectDetailModalStore
+} from '../components/project/ProjectDetailModal';
+import './../assets/styles/pages/project.scss';
 
 const initialProjectTabs = {
 	All: true,
@@ -37,6 +39,7 @@ export default function ProjectPage() {
 	const [projects, setProjects] = useState(initialProjects);
 	const [tabs, setTabs] = useState(initialProjectTabs);
 	const [currentTab, setCurrentTab] = useState<TabKey>('All');
+	const selectedProject = useProjectDetailModalStore(state => state.project);
 
 	const changeTab = (tab: TabKey) => {
 		setTabs(() => ({ ...initialProjectTabs, All: false, [tab]: true }));
@@ -48,6 +51,22 @@ export default function ProjectPage() {
 		}
 	};
 
+	const handleOpenModal = (id: number) => (e: React.MouseEvent) => {
+		const target = e.currentTarget as HTMLElement;
+		const imageElement = target.closest('li')?.querySelector('.project-image-container');
+		if (imageElement) {
+			const rect = imageElement.getBoundingClientRect();
+			useProjectDetailModalStore
+				.getState()
+				.setProject(projects.find(el => el.id == id) as Project, {
+					width: rect.width,
+					height: rect.height
+				});
+		} else {
+			useProjectDetailModalStore.getState().setProject(projects[id - 1]);
+		}
+	};
+
 	const mobileMatch = useMatchMediaStore(state => state.mobileMatch);
 	const tabletMatch = useMatchMediaStore(state => state.tabletMatch);
 
@@ -56,7 +75,7 @@ export default function ProjectPage() {
 			<Helmet>
 				<title>SeongChan | Project</title>
 			</Helmet>
-			<main className="inner pt-[12vh] pb-[12vh]">
+			<main className="project-page inner pt-[12vh] pb-[24vh]">
 				<header className="main-header">
 					<h2 className="text-[clamp(32px,7.292vw,82px)] font-bold tracking-tight">
 						Project
@@ -103,11 +122,11 @@ export default function ProjectPage() {
 					</div>
 				</header>
 
-				<ul className="grid grid-cols-2 gap-[3vw] mt-[4vw]">
+				<ul className="project-container grid grid-cols-2 gap-[6vw] mt-[4vw]">
 					<AnimatePresence initial={false}>
 						{projects.map((project, index) => (
 							<motion.li
-								className="flex flex-col"
+								className="project-item flex flex-col"
 								key={`${currentTab}-${project.id}`}
 								layout
 								transition={spring}
@@ -120,14 +139,21 @@ export default function ProjectPage() {
 										delay: index * 0.1
 									}
 								}}
-								viewport={{ once: true, amount: 0.3 }}>
-								<div className="h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden">
-									<Image
-										className="w-full h-full object-cover"
-										src={project.image}
-										alt=""
-									/>
-								</div>
+								viewport={{ once: true, amount: 0.3 }}
+								onClick={handleOpenModal(project.id)}>
+								{selectedProject?.id !== project.id ? (
+									<motion.div
+										layoutId={`project-image-${project.id}`}
+										className="project-image-container h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden">
+										<Image
+											className="w-full h-full object-cover"
+											src={project.image}
+											alt=""
+										/>
+									</motion.div>
+								) : (
+									<div className="h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden"></div>
+								)}
 								<h4 className="mt-[clamp(8px,1.563vw,22px)] text-[clamp(14.5px,2.344vw,22px)] font-semibold">
 									{project.name}
 								</h4>
@@ -136,20 +162,15 @@ export default function ProjectPage() {
 										<span key={el}>{el}</span>
 									))}
 								</p>
-								<p className="mt-[0.5vw] text-[clamp(13px,1.823vw,16px)] font-normal text-gray-900">
+								<p className="mt-[0.5vw] text-[clamp(13px,1.823vw,16px)] font-normal text-gray-800">
 									{project.desc}
 								</p>
-								<Link
-									to={project.link}
-									className="flex gap-4 items-center mt-[clamp(8px,1.302vw,14px)] text-[clamp(12px,1.823vw,14px)]">
-									자세히보기
-									<IconArrowStick className="w-[max(1.6vw,12px)] h-auto" />
-								</Link>
 							</motion.li>
 						))}
 					</AnimatePresence>
 				</ul>
 			</main>
+			<ProjectDetailModal />
 		</>
 	);
 }

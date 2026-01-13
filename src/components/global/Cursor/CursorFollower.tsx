@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'motion/react';
+import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
 
 interface CursorFollowerProps {
 	size?: number;
@@ -30,8 +30,13 @@ export default function CursorFollower({
 	const cursorXSpring = useSpring(cursorX, springConfig);
 	const cursorYSpring = useSpring(cursorY, springConfig);
 
+	// 중앙 정렬을 위한 변환
+	const followerX = useTransform(cursorXSpring, x => x - size / 2);
+	const followerY = useTransform(cursorYSpring, y => y - size / 2);
+	const dotX = useTransform(cursorX, x => x - dotSize / 2);
+	const dotY = useTransform(cursorY, y => y - dotSize / 2);
+
 	useEffect(() => {
-		// 기본 커서 숨기기
 		document.body.style.cursor = 'none';
 		document.documentElement.style.cursor = 'none';
 
@@ -92,33 +97,27 @@ export default function CursorFollower({
 
 	return (
 		<>
-			{/* 테두리 원 */}
 			<motion.div
 				className="cursor-follower pointer-events-none fixed z-9999 rounded-full border border-white bg-transparent mix-blend-difference"
 				style={{
-					x: cursorXSpring,
-					y: cursorYSpring,
+					left: followerX,
+					top: followerY,
 					width: size,
 					height: size,
-					opacity: isVisible ? 1 : 0,
-					translateX: '-50%',
-					translateY: '-50%'
+					opacity: isVisible ? 1 : 0
 				}}
 				initial={{ scale: 0 }}
 				animate={{ scale: isVisible ? (isHovering ? 2 : 1) : 0 }}
 				transition={{ duration: 0.3, type: 'spring', stiffness: 300, damping: 20 }}
 			/>
-			{/* 중앙 점 */}
 			<motion.div
 				className="cursor-dot pointer-events-none fixed z-9999 rounded-full bg-white mix-blend-difference"
 				style={{
-					x: cursorX,
-					y: cursorY,
+					left: dotX,
+					top: dotY,
 					width: dotSize,
 					height: dotSize,
-					opacity: isVisible ? 1 : 0,
-					translateX: '-50%',
-					translateY: '-50%'
+					opacity: isVisible ? 1 : 0
 				}}
 				initial={{ scale: 0 }}
 				animate={{ scale: isVisible ? (isClicked ? 2 : 1) : 0 }}

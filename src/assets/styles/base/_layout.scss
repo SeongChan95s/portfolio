@@ -6,15 +6,13 @@ html {
 }
 
 .wrapper {
-	display: flex;
-	flex-direction: column;
 	min-height: 100svh;
-	@include layout-width;
 }
 
 .inner {
 	padding-right: var(--inner);
 	padding-left: var(--inner);
+	@include layout-width;
 }
 
 .layout-width {

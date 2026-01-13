@@ -11,7 +11,7 @@ export const initialProjects: Project[] = [
 	{
 		id: 2,
 		name: '아름다울 영화제',
-		category: ['Creative', 'Parallax', 'Responsive'],
+		category: ['Creative', 'Parallax', 'Responsive', 'Bootstrap'],
 		desc: '몰입감 있는 영화제 사이트',
 		image:
 			'https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/project%2FbeautifulFilm%2Fthumbnail.jpg?alt=media&token=0a7fd796-1f24-40f4-9946-5b02e2f28537',

@@ -1,0 +1,8 @@
+.project-page {
+	.project-container {
+		.project-item:nth-child(even) {
+			position: relative;
+			top: 13%;
+		}
+	}
+}
