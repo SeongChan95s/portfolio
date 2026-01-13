@@ -29,7 +29,7 @@ const modalVariants = {
 	visible: {
 		opacity: 1,
 		transition: {
-			delayChildren: 0.5,
+			delayChildren: 0.4,
 			staggerChildren: 0.2
 		}
 	},
@@ -37,7 +37,7 @@ const modalVariants = {
 		opacity: 1,
 		transition: {
 			when: 'afterChildren',
-			staggerChildren: 0.5,
+			staggerChildren: 0.4,
 			staggerDirection: -1
 		}
 	}

@@ -127,7 +127,7 @@ export default function ProjectPage() {
 						{projects.map((project, index) => (
 							<motion.li
 								className="project-item flex flex-col"
-								key={`${currentTab}-${project.id}`}
+								key={project.id}
 								layout
 								transition={spring}
 								initial={{ y: 100, opacity: 0 }}
