@@ -9,6 +9,8 @@ import '@/assets/styles/utils/_transition.scss';
 import '@/assets/styles/base/tailwind.css';
 import Router from './router';
 import Wrapper from './Wrapper';
+import { matchMediaListener } from './utils/matchMedia';
+matchMediaListener();
 
 // Service Worker 등록
 const updateSW = registerSW({

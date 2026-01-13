@@ -51,7 +51,7 @@ export default function HomePage() {
 							initial={{ opacity: 0, y: 50 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							transition={{ duration: 0.8 }}
-							className="flex flex-col items-center justify-center text-center">
+							className="flex flex-col items-center justify-center text-center z-1">
 							<h3 className="text-7xl font-bold font-bebasNeue">SMART CODE</h3>
 							<p className="text-body-1 font-heebo">Portfolio</p>
 						</motion.div>

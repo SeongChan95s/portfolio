@@ -2,13 +2,15 @@ import { Helmet } from 'react-helmet-async';
 import { useState } from 'react';
 import * as motion from 'motion/react-client';
 import type { Transition } from 'motion';
-import { AnimatePresence, stagger } from 'motion/react';
+import { AnimatePresence } from 'motion/react';
 import { RollupButton } from '../components/global/Button';
 import { Image } from '../components/common/Image';
 import { Link } from 'react-router-dom';
 import { IconArrowStick } from '../components/common/Icon';
+import { initialProjects } from '../constants/project';
+import { useMatchMediaStore } from '../stores/useMatchMediaStore';
 
-const initialTabs = {
+const initialProjectTabs = {
 	All: true,
 	Service: false,
 	Clone: false,
@@ -23,55 +25,7 @@ const initialTabs = {
 	Tailwind: false
 };
 
-type TabKey = keyof typeof initialTabs;
-
-interface Project {
-	id: number;
-	name: string;
-	category: TabKey[];
-	desc: string;
-	image: string;
-	link: string;
-}
-
-const initialProjects: Project[] = [
-	{
-		id: 1,
-		name: '핫플로',
-		category: ['Creative', 'Responsive'],
-		desc: '트렌디한 핫플레이스 탐색 및 예약 & 웨이팅 플랫폼',
-		image:
-			'https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/project%2Fhotflo%2Fthumbnail.jpg?alt=media&token=a452bfc3-9e13-4395-9cf2-9db69e5f2d14',
-		link: '#none'
-	},
-	{
-		id: 2,
-		name: '아름다울 영화제',
-		category: ['Creative', 'Parallax', 'Responsive'],
-		desc: '몰입감 있는 영화제 사이트',
-		image:
-			'https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/project%2FbeautifulFilm%2Fthumbnail.jpg?alt=media&token=0a7fd796-1f24-40f4-9946-5b02e2f28537',
-		link: '#none'
-	},
-	{
-		id: 3,
-		name: '인생맥주',
-		category: ['Creative', 'Parallax', 'Responsive'],
-		desc: '감성적인 수제맥주 프렌차이즈 웹사이트',
-		image:
-			'https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/project%2FlifesBeer%2Fthumbnail.jpg?alt=media&token=0e737488-cfa3-4c92-ae7d-69699b1c6d5e',
-		link: '#none'
-	},
-	{
-		id: 4,
-		name: '오늘의 여행',
-		category: ['Creative', 'Web'],
-		desc: '편리하고 쉬운 여행 플랫폼',
-		image:
-			'https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/project%2FtodayTour%2Fthumbnail.jpg?alt=media&token=3a72d1b2-9164-4684-9e90-79db0cdbb418',
-		link: '#none'
-	}
-];
+type TabKey = keyof typeof initialProjectTabs;
 
 const spring: Transition = {
 	type: 'spring',
@@ -81,10 +35,12 @@ const spring: Transition = {
 
 export default function ProjectPage() {
 	const [projects, setProjects] = useState(initialProjects);
-	const [tabs, setTabs] = useState(initialTabs);
+	const [tabs, setTabs] = useState(initialProjectTabs);
+	const [currentTab, setCurrentTab] = useState<TabKey>('All');
 
 	const changeTab = (tab: TabKey) => {
-		setTabs(() => ({ ...initialTabs, All: false, [tab]: true }));
+		setTabs(() => ({ ...initialProjectTabs, All: false, [tab]: true }));
+		setCurrentTab(tab);
 		if (tab != 'All') {
 			setProjects(() => initialProjects.filter(el => el.category.includes(tab)));
 		} else {
@@ -92,22 +48,28 @@ export default function ProjectPage() {
 		}
 	};
 
+	const mobileMatch = useMatchMediaStore(state => state.mobileMatch);
+	const tabletMatch = useMatchMediaStore(state => state.tabletMatch);
+
 	return (
 		<>
 			<Helmet>
 				<title>SeongChan | Project</title>
 			</Helmet>
-			<main className="inner pt-[12vw]">
+			<main className="inner pt-[12vh] pb-[12vh]">
 				<header className="main-header">
-					<h2 className="text-[max(5vw,42px)] font-bold tracking-tight">Project</h2>
+					<h2 className="text-[clamp(32px,7.292vw,82px)] font-bold tracking-tight">
+						Project
+					</h2>
 					<div className="tab mt-[2.5vw]">
 						<div className="flex gap-8">
 							{(['All', 'Service', 'Clone', 'Creative'] as TabKey[]).map(tab => (
 								<RollupButton
-									size="sm"
+									size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
 									shape="round"
 									active={tabs[tab]}
-									onClick={() => changeTab(tab)}>
+									onClick={() => changeTab(tab)}
+									key={tab}>
 									{tab}
 								</RollupButton>
 							))}
@@ -116,10 +78,11 @@ export default function ProjectPage() {
 							{(['Interactive', 'Parallax', 'Bootstrap', 'Tailwind'] as TabKey[]).map(
 								tab => (
 									<RollupButton
-										size="sm"
+										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
 										shape="round"
 										active={tabs[tab]}
-										onClick={() => changeTab(tab)}>
+										onClick={() => changeTab(tab)}
+										key={tab}>
 										{tab}
 									</RollupButton>
 								)
@@ -128,10 +91,11 @@ export default function ProjectPage() {
 						<div className="flex gap-8 mt-8">
 							{(['Responsive', 'Web', 'Mobile', 'Server'] as TabKey[]).map(tab => (
 								<RollupButton
-									size="sm"
+									size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
 									shape="round"
 									active={tabs[tab]}
-									onClick={() => changeTab(tab)}>
+									onClick={() => changeTab(tab)}
+									key={tab}>
 									{tab}
 								</RollupButton>
 							))}
@@ -143,7 +107,8 @@ export default function ProjectPage() {
 					<AnimatePresence initial={false}>
 						{projects.map((project, index) => (
 							<motion.li
-								key={project.id}
+								className="flex flex-col"
+								key={`${currentTab}-${project.id}`}
 								layout
 								transition={spring}
 								initial={{ y: 100, opacity: 0 }}
@@ -155,8 +120,8 @@ export default function ProjectPage() {
 										delay: index * 0.1
 									}
 								}}
-								viewport={{ once: false, amount: 0.3 }}>
-								<div className="aspect-square rounded-xl overflow-hidden">
+								viewport={{ once: true, amount: 0.3 }}>
+								<div className="h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden">
 									<Image
 										className="w-full h-full object-cover"
 										src={project.image}
@@ -171,12 +136,12 @@ export default function ProjectPage() {
 										<span key={el}>{el}</span>
 									))}
 								</p>
-								<p className="mt-[0.5vw] text-[max(1.5vw,13px)] font-normal text-gray-900">
+								<p className="mt-[0.5vw] text-[clamp(13px,1.823vw,16px)] font-normal text-gray-900">
 									{project.desc}
 								</p>
 								<Link
 									to={project.link}
-									className="flex gap-4 items-center text-[max(1.6vw,12px)]">
+									className="flex gap-4 items-center mt-[clamp(8px,1.302vw,14px)] text-[clamp(12px,1.823vw,14px)]">
 									자세히보기
 									<IconArrowStick className="w-[max(1.6vw,12px)] h-auto" />
 								</Link>
