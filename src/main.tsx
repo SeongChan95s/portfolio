@@ -10,6 +10,9 @@ import '@/assets/styles/base/tailwind.css';
 import Router from './router';
 import Wrapper from './Wrapper';
 import { matchMediaListener } from './utils/matchMedia';
+import ReactLenis from 'lenis/react';
+import './features/gsap/initialGSAP';
+
 matchMediaListener();
 
 // Service Worker 등록
@@ -28,6 +31,7 @@ const updateSW = registerSW({
 
 createRoot(document.getElementById('root')!).render(
 	<HelmetProvider>
+		<ReactLenis root />
 		<Wrapper>
 			<Router />
 		</Wrapper>

@@ -5,6 +5,7 @@ import { AnimatePresence } from 'motion/react';
 import { type Variants } from 'motion';
 import { NavLink } from 'react-router-dom';
 import { useNavStore } from '../../../stores/useNavStore';
+import { useLenis } from 'lenis/react';
 
 const navVariants: Variants = {
 	open: {
@@ -92,6 +93,7 @@ export default function ToggleNav() {
 	const [isResetting, setIsResetting] = useState(false);
 	const navBarRef = useRef<HTMLDivElement>(null);
 	const { height } = useViewportDimensions();
+	const lenis = useLenis();
 
 	useEffect(() => {
 		if (isNavOpen) {
@@ -113,6 +115,18 @@ export default function ToggleNav() {
 			setIsResetting(true);
 			setTimeout(() => setIsResetting(false), 300);
 		}, 800);
+	};
+
+	useEffect(() => {
+		if (isNavOpen) {
+			lenis?.stop();
+		} else {
+			lenis?.start();
+		}
+	}, [isNavOpen]);
+
+	const handleOpenNav = () => {
+		setNavOpen(!isNavOpen);
 	};
 
 	return (
@@ -156,7 +170,7 @@ export default function ToggleNav() {
 						? 'open'
 						: 'closed'
 				}
-				toggle={() => setNavOpen(!isNavOpen)}
+				toggle={handleOpenNav}
 			/>
 		</>
 	);
@@ -225,7 +239,7 @@ function ToggleContainer({
 function ToggleButton({ animate, toggle }: { animate: string; toggle: () => void }) {
 	return (
 		<button
-			className="toggle-button cursor-pointer absolute top-9 right-9 w-52 h-52 flex justify-center items-center pointer-events-auto mix-blend-difference z-99"
+			className="toggle-button cursor-pointer fixed top-9 right-9 w-52 h-52 flex justify-center items-center pointer-events-auto mix-blend-difference z-99"
 			onClick={toggle}>
 			<motion.svg
 				animate={animate}
