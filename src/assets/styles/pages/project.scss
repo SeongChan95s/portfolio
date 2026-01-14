@@ -1,8 +1,139 @@
 .project-page {
+	padding-top: 12vh;
+	padding-bottom: 24vh;
+
+	.main-header {
+		.page-title {
+			font-size: clamp(32px, 7.292vw, 82px);
+			font-weight: 700;
+			letter-spacing: -0.025em;
+		}
+
+		&-container {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
+			align-items: flex-end;
+			row-gap: 12px;
+			margin-top: 2.5vw;
+
+			.tab-menu {
+				display: flex;
+				flex-direction: column;
+				row-gap: 0.5rem;
+
+				> li {
+					display: flex;
+					gap: 0.5rem;
+
+					button {
+						text-transform: capitalize;
+					}
+				}
+			}
+
+			.grid-button-wrap {
+				display: flex;
+				gap: 6px;
+				.icon-button {
+					width: 36px;
+					height: 36px;
+					border: 1px solid var(--color-gray-200);
+					border-radius: 6px;
+					overflow: hidden;
+				}
+			}
+		}
+	}
+
 	.project-container {
-		.project-item:nth-child(even) {
+		display: grid;
+		margin-top: 4vw;
+
+		&.grid-cols-1 {
+			grid-template-columns: 1fr;
+			gap: 7vh;
+		}
+
+		&.grid-cols-2 {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 15vh 5vw;
+
+			.project-item {
+				&:nth-child(2n + 1) {
+					top: 0;
+				}
+				&:nth-child(2n + 2) {
+					top: 15%;
+				}
+			}
+		}
+
+		&.grid-cols-3 {
+			grid-template-columns: repeat(3, 1fr);
+			gap: 15vh 3.4vw;
+
+			.project-item {
+				&:nth-child(3n + 1) {
+					top: 0;
+				}
+				&:nth-child(3n + 2) {
+					top: 15%;
+				}
+				&:nth-child(3n + 3) {
+					top: 30%;
+				}
+			}
+		}
+
+		.project-item {
 			position: relative;
-			top: 13%;
+			display: flex;
+			flex-direction: column;
+
+			.project-image-container {
+				height: clamp(150px, 39.063vw, 50vh);
+				border-radius: 0.75rem;
+				overflow: hidden;
+
+				img {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+				}
+			}
+
+			> div:first-child {
+				height: clamp(150px, 39.063vw, 50vh);
+				border-radius: 0.75rem;
+				overflow: hidden;
+			}
+
+			.project {
+				&-title {
+					margin-top: clamp(8px, 1.563vw, 22px);
+					font-size: clamp(14.5px, 2.344vw, 22px);
+					font-weight: 600;
+				}
+
+				&-category {
+					display: flex;
+					flex-wrap: wrap;
+					column-gap: 0.5rem;
+					margin-top: clamp(2px, 0.521vw, 22px);
+					font-size: clamp(11px, 1.563vw, 14px);
+					font-weight: 500;
+					color: rgb(107, 114, 128);
+					text-transform: capitalize;
+				}
+
+				&-desc {
+					margin-top: 0.5vw;
+					font-size: clamp(13px, 1.823vw, 16px);
+					font-weight: 400;
+					color: rgb(31, 41, 55);
+				}
+			}
 		}
 	}
 }

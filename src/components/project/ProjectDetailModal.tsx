@@ -4,6 +4,7 @@ import { Overlay } from '../common/Overlay';
 import { Image } from '../common/Image';
 import { create } from 'zustand';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 interface UseProjectDetailModalStore {
 	project: Project | null;
@@ -49,7 +50,7 @@ const containerVariants = {
 	exit: { opacity: 0, x: 40 }
 };
 
-export default function ProjectDetailModal() {
+export default function ProjectDetailModal({ gridCols }: { gridCols: number }) {
 	const project = useProjectDetailModalStore(state => state.project);
 	const imageSize = useProjectDetailModalStore(state => state.imageSize);
 
@@ -57,6 +58,10 @@ export default function ProjectDetailModal() {
 		e.stopPropagation();
 		useProjectDetailModalStore.getState().setProject(null);
 	};
+
+	useEffect(() => {
+		return () => useProjectDetailModalStore.getState().setProject(null);
+	}, []);
 
 	return (
 		<>
@@ -70,7 +75,9 @@ export default function ProjectDetailModal() {
 				{project && (
 					<motion.aside
 						key="project-detail-modal"
-						className="project-detail-modal fixed inset-[50%] transform-[translate(-50%,-50%)] flex flex-col justify-center gap-14 w-fit h-fit text-surface-01 z-90 md:flex-row md:items-center md:w-[clamp(300px,75.521vw,1200px)] md:gap-[4%]"
+						className={`project-detail-modal fixed inset-[50%] transform-[translate(-50%,-50%)] flex justify-center gap-y-14 w-full h-fit inner text-surface-01 z-90 gap-x-[4%] ${
+							gridCols == 1 ? 'flex-col' : 'flex-row items-center'
+						}`}
 						variants={modalVariants}
 						initial="hidden"
 						animate="visible"
@@ -90,14 +97,18 @@ export default function ProjectDetailModal() {
 							/>
 						</motion.div>
 
-						<motion.div className="flex-1" variants={containerVariants}>
+						<motion.div variants={containerVariants}>
 							<h5 className="text-[clamp(24px,4.948vw,52px)]">{project.name}</h5>
 							<p className="text-[clamp(15px,2.083vw,18px)] mt-[clamp(4px,0.911vw,10px)]">
 								{project.desc}
 							</p>
+							<p>
+								{project.languages.map(el => (
+									<span>{el}</span>
+								))}
+							</p>
 							<Link
 								to={`/detail/${project.id}`}
-								onClick={() => useProjectDetailModalStore.getState().setProject(null)}
 								className="block mt-[clamp(12px,3.125vw,24px)] text-[15px] text-gray-300 font-semibold">
 								View More
 							</Link>

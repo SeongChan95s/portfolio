@@ -11,23 +11,27 @@ import ProjectDetailModal, {
 	useProjectDetailModalStore
 } from '../components/project/ProjectDetailModal';
 import './../assets/styles/pages/project.scss';
+import { IconButton } from '../components/common/IconButton';
+import {
+	IconGridCol1Filled,
+	IconGridCol2,
+	IconGridCol3
+} from '../components/common/Icon';
 
 const initialProjectTabs = {
-	All: true,
-	Service: false,
-	Clone: false,
-	Creative: false,
-	Server: false,
-	Interactive: false,
-	Parallax: false,
-	Responsive: false,
-	Web: false,
-	Mobile: false,
-	Bootstrap: false,
-	Tailwind: false
+	all: true,
+	service: false,
+	clone: false,
+	creative: false,
+	server: false,
+	interactive: false,
+	parallax: false,
+	responsive: false,
+	web: false,
+	mobile: false,
+	bootstrap: false,
+	tailwindCss: false
 };
-
-type TabKey = keyof typeof initialProjectTabs;
 
 const spring: Transition = {
 	type: 'spring',
@@ -38,13 +42,12 @@ const spring: Transition = {
 export default function ProjectPage() {
 	const [projects, setProjects] = useState(initialProjects);
 	const [tabs, setTabs] = useState(initialProjectTabs);
-	const [currentTab, setCurrentTab] = useState<TabKey>('All');
 	const selectedProject = useProjectDetailModalStore(state => state.project);
+	const [gridCols, setGridCols] = useState(3);
 
-	const changeTab = (tab: TabKey) => {
-		setTabs(() => ({ ...initialProjectTabs, All: false, [tab]: true }));
-		setCurrentTab(tab);
-		if (tab != 'All') {
+	const changeTab = (tab: Category) => {
+		setTabs(() => ({ ...initialProjectTabs, all: false, [tab]: true }));
+		if (tab != 'all') {
 			setProjects(() => initialProjects.filter(el => el.category.includes(tab)));
 		} else {
 			setProjects(initialProjects);
@@ -75,27 +78,13 @@ export default function ProjectPage() {
 			<Helmet>
 				<title>SeongChan | Project</title>
 			</Helmet>
-			<main className="project-page inner pt-[12vh] pb-[24vh]">
+			<main className="project-page inner">
 				<header className="main-header">
-					<h2 className="text-[clamp(32px,7.292vw,82px)] font-bold tracking-tight">
-						Project
-					</h2>
-					<div className="tab mt-[2.5vw]">
-						<div className="flex gap-8">
-							{(['All', 'Service', 'Clone', 'Creative'] as TabKey[]).map(tab => (
-								<RollupButton
-									size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
-									shape="round"
-									active={tabs[tab]}
-									onClick={() => changeTab(tab)}
-									key={tab}>
-									{tab}
-								</RollupButton>
-							))}
-						</div>
-						<div className="flex gap-8 mt-8">
-							{(['Interactive', 'Parallax', 'Bootstrap', 'Tailwind'] as TabKey[]).map(
-								tab => (
+					<h2 className="page-title">Project</h2>
+					<div className="main-header-container">
+						<ul className="tab-menu">
+							<li>
+								{(['all', 'service', 'clone', 'creative'] as Category[]).map(tab => (
 									<RollupButton
 										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
 										shape="round"
@@ -104,30 +93,50 @@ export default function ProjectPage() {
 										key={tab}>
 										{tab}
 									</RollupButton>
-								)
-							)}
-						</div>
-						<div className="flex gap-8 mt-8">
-							{(['Responsive', 'Web', 'Mobile', 'Server'] as TabKey[]).map(tab => (
-								<RollupButton
-									size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
-									shape="round"
-									active={tabs[tab]}
-									onClick={() => changeTab(tab)}
-									key={tab}>
-									{tab}
-								</RollupButton>
-							))}
+								))}
+							</li>
+							<li>
+								{(
+									['interactive', 'parallax', 'bootstrap', 'tailwindCss'] as Category[]
+								).map(tab => (
+									<RollupButton
+										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
+										shape="round"
+										active={tabs[tab]}
+										onClick={() => changeTab(tab)}
+										key={tab}>
+										{tab}
+									</RollupButton>
+								))}
+							</li>
+							<li>
+								{(['responsive', 'web', 'mobile', 'server'] as Category[]).map(tab => (
+									<RollupButton
+										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
+										shape="round"
+										active={tabs[tab]}
+										onClick={() => changeTab(tab)}
+										key={tab}>
+										{tab}
+									</RollupButton>
+								))}
+							</li>
+						</ul>
+
+						<div className="grid-button-wrap">
+							<IconButton icon={<IconGridCol3 onClick={() => setGridCols(3)} />} />
+							<IconButton icon={<IconGridCol2 onClick={() => setGridCols(2)} />} />
+							<IconButton icon={<IconGridCol1Filled onClick={() => setGridCols(1)} />} />
 						</div>
 					</div>
 				</header>
 
-				<ul className="project-container grid grid-cols-2 gap-[6vw] mt-[4vw]">
+				<ul className={`project-container grid-cols-${gridCols}`}>
 					<AnimatePresence initial={false}>
 						{projects.map((project, index) => (
 							<motion.li
-								className="project-item flex flex-col"
-								key={project.id}
+								className="project-item"
+								key={`${project.id}-${gridCols}`}
 								layout
 								transition={spring}
 								initial={{ y: 100, opacity: 0 }}
@@ -144,33 +153,25 @@ export default function ProjectPage() {
 								{selectedProject?.id !== project.id ? (
 									<motion.div
 										layoutId={`project-image-${project.id}`}
-										className="project-image-container h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden">
-										<Image
-											className="w-full h-full object-cover"
-											src={project.image}
-											alt=""
-										/>
+										className="project-image-container">
+										<Image src={project.image} alt="" />
 									</motion.div>
 								) : (
-									<div className="h-[clamp(150px,39.063vw,50vh)] rounded-xl overflow-hidden"></div>
+									<div></div>
 								)}
-								<h4 className="mt-[clamp(8px,1.563vw,22px)] text-[clamp(14.5px,2.344vw,22px)] font-semibold">
-									{project.name}
-								</h4>
-								<p className="flex flex-wrap gap-x-8 mt-[clamp(2px,0.521vw,22px)] text-[clamp(11px,1.563vw,14px)] font-medium text-gray-500">
+								<h4 className="project-title">{project.name}</h4>
+								<p className="project-category">
 									{project.category.map(el => (
 										<span key={el}>{el}</span>
 									))}
 								</p>
-								<p className="mt-[0.5vw] text-[clamp(13px,1.823vw,16px)] font-normal text-gray-800">
-									{project.desc}
-								</p>
+								<p className="project-desc">{project.desc}</p>
 							</motion.li>
 						))}
 					</AnimatePresence>
 				</ul>
 			</main>
-			<ProjectDetailModal />
+			<ProjectDetailModal gridCols={gridCols} />
 		</>
 	);
 }
