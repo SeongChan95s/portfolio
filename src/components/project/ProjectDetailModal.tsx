@@ -97,6 +97,7 @@ export default function ProjectDetailModal() {
 							</p>
 							<Link
 								to={`/detail/${project.id}`}
+								onClick={() => useProjectDetailModalStore.getState().setProject(null)}
 								className="block mt-[clamp(12px,3.125vw,24px)] text-[15px] text-gray-300 font-semibold">
 								View More
 							</Link>

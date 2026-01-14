@@ -21,10 +21,15 @@ export default function AboutPage() {
 				}
 			});
 
-			tl.from('.visual', {
-				width: '10%',
-				height: '50%'
-			});
+			tl.from('.visual-wrap', {
+				clipPath: 'inset(24% 46% 24% 46%)'
+			}).from(
+				'.visual',
+				{
+					height: '60%'
+				},
+				'<'
+			);
 		},
 		{ scope: containerRef }
 	);
@@ -43,11 +48,11 @@ export default function AboutPage() {
 					</div>
 
 					<div className="timeline01 flex justify-center items-center w-screen h-svh">
-						<div className="visual w-full h-svh mr-auto ml-auto">
+						<div className="visual-wrap w-full h-svh mr-auto ml-auto">
 							<Image
 								src="https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/Home%2Fintro_bg.jpg?alt=media&token=e1aeb562-0610-493c-8cd2-2555095e7558"
 								alt=""
-								className="w-full h-full [object-fit:150%] object-center"
+								className="visual w-full h-full mr-auto ml-auto object-cover"
 							/>
 						</div>
 					</div>
