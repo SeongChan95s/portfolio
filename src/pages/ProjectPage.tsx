@@ -5,7 +5,7 @@ import type { Transition } from 'motion';
 import { AnimatePresence } from 'motion/react';
 import { RollupButton } from '../components/global/Button';
 import { Image } from '../components/common/Image';
-import { initialProjects } from '../constants/project';
+import { projectsData } from '../constants/project';
 import { useMatchMediaStore } from '../stores/useMatchMediaStore';
 import ProjectDetailModal, {
 	useProjectDetailModalStore
@@ -30,7 +30,7 @@ const initialProjectTabs = {
 	web: false,
 	mobile: false,
 	bootstrap: false,
-	tailwindCss: false
+	'tailwind css': false
 };
 
 const spring: Transition = {
@@ -40,7 +40,7 @@ const spring: Transition = {
 };
 
 export default function ProjectPage() {
-	const [projects, setProjects] = useState(initialProjects);
+	const [projects, setProjects] = useState(projectsData);
 	const [tabs, setTabs] = useState(initialProjectTabs);
 	const selectedProject = useProjectDetailModalStore(state => state.project);
 	const [gridCols, setGridCols] = useState(3);
@@ -48,9 +48,9 @@ export default function ProjectPage() {
 	const changeTab = (tab: Category) => {
 		setTabs(() => ({ ...initialProjectTabs, all: false, [tab]: true }));
 		if (tab != 'all') {
-			setProjects(() => initialProjects.filter(el => el.category.includes(tab)));
+			setProjects(() => projectsData.filter(el => el.categories.includes(tab)));
 		} else {
-			setProjects(initialProjects);
+			setProjects(projectsData);
 		}
 	};
 
@@ -97,7 +97,7 @@ export default function ProjectPage() {
 							</li>
 							<li>
 								{(
-									['interactive', 'parallax', 'bootstrap', 'tailwindCss'] as Category[]
+									['interactive', 'parallax', 'bootstrap', 'tailwind css'] as Category[]
 								).map(tab => (
 									<RollupButton
 										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
@@ -124,9 +124,18 @@ export default function ProjectPage() {
 						</ul>
 
 						<div className="grid-button-wrap">
-							<IconButton icon={<IconGridCol3 onClick={() => setGridCols(3)} />} />
-							<IconButton icon={<IconGridCol2 onClick={() => setGridCols(2)} />} />
-							<IconButton icon={<IconGridCol1Filled onClick={() => setGridCols(1)} />} />
+							<IconButton
+								className={gridCols == 3 ? 'active' : undefined}
+								icon={<IconGridCol3 onClick={() => setGridCols(3)} />}
+							/>
+							<IconButton
+								className={gridCols == 2 ? 'active' : undefined}
+								icon={<IconGridCol2 onClick={() => setGridCols(2)} />}
+							/>
+							<IconButton
+								className={gridCols == 1 ? 'active' : undefined}
+								icon={<IconGridCol1Filled onClick={() => setGridCols(1)} />}
+							/>
 						</div>
 					</div>
 				</header>
@@ -154,14 +163,14 @@ export default function ProjectPage() {
 									<motion.div
 										layoutId={`project-image-${project.id}`}
 										className="project-image-container">
-										<Image src={project.image} alt="" />
+										<Image src={project.thumbnail} alt="" />
 									</motion.div>
 								) : (
 									<div></div>
 								)}
 								<h4 className="project-title">{project.name}</h4>
 								<p className="project-category">
-									{project.category.map(el => (
+									{project.categories.map(el => (
 										<span key={el}>{el}</span>
 									))}
 								</p>

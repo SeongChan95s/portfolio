@@ -1,0 +1,25 @@
+.detail-section {
+	.project-detail-left-top {
+		h5 {
+			color: var(--color-gray-400);
+			font-weight: 300;
+		}
+
+		p {
+			color: var(--color-gray-900);
+		}
+	}
+
+	.project-brief,
+	.project-concept {
+		h5 {
+			font-size: clamp(13px, 1.823vw, 15px);
+			font-weight: 600;
+		}
+
+		p {
+			font-size: clamp(14px, 1.563vw, 18px);
+			font-weight: 300;
+		}
+	}
+}

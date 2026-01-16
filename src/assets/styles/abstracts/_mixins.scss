@@ -203,7 +203,8 @@
 @mixin layout-width {
 	min-width: var(--layout-min-width);
 	max-width: var(--layout-max-width);
-	margin: 0 auto;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 @mixin bg-full {
