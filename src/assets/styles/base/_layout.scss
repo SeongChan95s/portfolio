@@ -13,7 +13,6 @@
 	.inner {
 		padding-right: var(--inner);
 		padding-left: var(--inner);
-		@include layout-width;
 	}
 
 	.layout-width {

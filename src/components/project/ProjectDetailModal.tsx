@@ -2,29 +2,11 @@ import * as motion from 'motion/react-client';
 import { AnimatePresence } from 'motion/react';
 import { Overlay } from '../common/Overlay';
 import { Image } from '../common/Image';
-import { create } from 'zustand';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useLenis } from 'lenis/react';
-
-interface UseProjectDetailModalStore {
-	project: Project | null;
-	imageSize: { width: number; height: number } | null;
-	setProject: (
-		project: Project | null,
-		imageSize?: { width: number; height: number } | null
-	) => void;
-}
-
-export const useProjectDetailModalStore = create<UseProjectDetailModalStore>(set => ({
-	project: null,
-	imageSize: null,
-	setProject: (project, imageSize = null) =>
-		set({
-			project,
-			imageSize
-		})
-}));
+import styles from './ProjectDetailModal.module.scss';
+import { useProjectDetailModalStore } from '../../stores/project';
 
 const modalVariants = {
 	hidden: { opacity: 1 },
@@ -80,15 +62,15 @@ export default function ProjectDetailModal({ gridCols }: { gridCols: number }) {
 				{project && (
 					<motion.aside
 						key="project-detail-modal"
-						className={`project-detail-modal fixed inset-[50%] transform-[translate(-50%,-50%)] flex justify-center gap-y-14 w-full h-fit inner text-surface-01 z-90 gap-x-[4%] ${
-							gridCols == 1 ? 'flex-col' : 'flex-row items-center'
+						className={`${styles.modal} inner ${
+							gridCols == 1 ? styles.vertical : styles.horizontal
 						}`}
 						variants={modalVariants}
 						initial="hidden"
 						animate="visible"
 						exit="exit">
 						<motion.div
-							className="visual flex-none rounded-xl overflow-hidden"
+							className={styles.visual}
 							style={
 								imageSize
 									? { width: imageSize.width, height: imageSize.height }
@@ -96,32 +78,26 @@ export default function ProjectDetailModal({ gridCols }: { gridCols: number }) {
 							}
 							layoutId={`project-image-${project.id}`}>
 							<Image
-								className="w-full h-full object-cover"
+								className={styles.image}
 								src={project.thumbnail}
 								alt={project.name}
 							/>
 						</motion.div>
 
-						<motion.div variants={containerVariants}>
-							<h5 className="text-[clamp(24px,3.906vw,42px)] font-semibold">
-								{project.name}
-							</h5>
-							<p className="text-[clamp(15px,2.083vw,18px)] mt-[clamp(4px,4px,10px)] font-light">
-								{project.desc}
-							</p>
-							<p className="project-language flex flex-wrap gap-x-12 mt-6 text-[15px] font-medium text-gray-200">
+						<motion.div className={styles.content} variants={containerVariants}>
+							<h5 className={styles.title}>{project.name}</h5>
+							<p className={styles.desc}>{project.desc}</p>
+							<p className={styles.languages}>
 								{project.languages.map(el => (
 									<span key={`language-${el}`}>{el}</span>
 								))}
 							</p>
-							<ul className="project-features flex flex-col gap-3 mt-24 text-[14px] font-light text-gray-100">
+							<ul className={styles.features}>
 								{project.features.map(el => (
-									<li key={`feature-${el}`}>- {el.title}</li>
+									<li key={`feature-${el.title}`}>- {el.title}</li>
 								))}
 							</ul>
-							<Link
-								to={`/project/${project.id}`}
-								className="block mt-[clamp(12px,3.385vw,30px)] text-[15px] text-gray-300 font-semibold">
+							<Link to={`/project/${project.id}`} className={styles.link}>
 								View More
 							</Link>
 						</motion.div>

@@ -7,9 +7,7 @@ import { RollupButton } from '../components/global/Button';
 import { Image } from '../components/common/Image';
 import { projectsData } from '../constants/project';
 import { useMatchMediaStore } from '../stores/useMatchMediaStore';
-import ProjectDetailModal, {
-	useProjectDetailModalStore
-} from '../components/project/ProjectDetailModal';
+import ProjectDetailModal from '../components/project/ProjectDetailModal';
 import './../assets/styles/pages/project.scss';
 import { IconButton } from '../components/common/IconButton';
 import {
@@ -17,6 +15,7 @@ import {
 	IconGridCol2,
 	IconGridCol3
 } from '../components/common/Icon';
+import { useProjectDetailModalStore } from '../stores/project';
 
 const initialProjectTabs = {
 	all: true,
@@ -70,8 +69,7 @@ export default function ProjectPage() {
 		}
 	};
 
-	const mobileMatch = useMatchMediaStore(state => state.mobileMatch);
-	const tabletMatch = useMatchMediaStore(state => state.tabletMatch);
+	const mediaQuery = useMatchMediaStore(state => state.media);
 
 	return (
 		<>
@@ -86,7 +84,7 @@ export default function ProjectPage() {
 							<li>
 								{(['all', 'service', 'clone', 'creative'] as Category[]).map(tab => (
 									<RollupButton
-										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
+										size={mediaQuery == 'sm' ? 'xs' : mediaQuery == 'md' ? 'sm' : 'md'}
 										shape="round"
 										active={tabs[tab]}
 										onClick={() => changeTab(tab)}
@@ -100,7 +98,7 @@ export default function ProjectPage() {
 									['interactive', 'parallax', 'bootstrap', 'tailwind css'] as Category[]
 								).map(tab => (
 									<RollupButton
-										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
+										size={mediaQuery == 'sm' ? 'xs' : mediaQuery == 'md' ? 'sm' : 'md'}
 										shape="round"
 										active={tabs[tab]}
 										onClick={() => changeTab(tab)}
@@ -112,7 +110,7 @@ export default function ProjectPage() {
 							<li>
 								{(['responsive', 'web', 'mobile', 'server'] as Category[]).map(tab => (
 									<RollupButton
-										size={mobileMatch ? 'xs' : tabletMatch ? 'sm' : 'md'}
+										size={mediaQuery == 'sm' ? 'xs' : mediaQuery == 'md' ? 'sm' : 'md'}
 										shape="round"
 										active={tabs[tab]}
 										onClick={() => changeTab(tab)}

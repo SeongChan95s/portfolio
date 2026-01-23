@@ -12,16 +12,30 @@
 
 ------ */
 
-@mixin tablet {
-	/* tablet device : 768px ~ */
+@mixin md {
+	/* md device : 768px ~ */
 	@media (width >=768px) {
 		@content;
 	}
 }
 
-@mixin desktop {
-	/* desktop device : 1025px ~ */
-	@media (width >=1025px) {
+@mixin lg {
+	/* lg device : 1024px ~ */
+	@media (width >=1024px) {
+		@content;
+	}
+}
+
+@mixin xl {
+	/* desktop device : 1280px ~ */
+	@media (width >=1280px) {
+		@content;
+	}
+}
+
+@mixin xxl {
+	/* desktop device : 1536px ~ */
+	@media (width >=1536px) {
 		@content;
 	}
 }

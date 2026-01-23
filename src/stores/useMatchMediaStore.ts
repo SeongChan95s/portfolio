@@ -1,28 +1,16 @@
 import { create } from 'zustand';
 
+type Media = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+
 interface UseMatchMediaStore {
-	desktopMatch: boolean;
-	tabletMatch: boolean;
-	mobileMatch: boolean;
-	setDesktopMatch: (value: boolean) => void;
-	setTabletMatch: (value: boolean) => void;
-	setMobileMatch: (value: boolean) => void;
+	media: Media;
+	setMedia: (value: Media) => void;
 }
 
 export const useMatchMediaStore = create<UseMatchMediaStore>(set => ({
-	desktopMatch: false,
-	tabletMatch: false,
-	mobileMatch: false,
-	setDesktopMatch: value =>
+	media: 'md',
+	setMedia: value =>
 		set({
-			desktopMatch: value
-		}),
-	setTabletMatch: value =>
-		set({
-			tabletMatch: value
-		}),
-	setMobileMatch: value =>
-		set({
-			mobileMatch: value
+			media: value
 		})
 }));

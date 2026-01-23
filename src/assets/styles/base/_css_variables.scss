@@ -11,11 +11,11 @@
 	--header-layout-md: #{$header-layout-md};
 	--header-layout-lg: #{$header-layout-lg};
 
-	@include tablet {
+	@include md {
 		--inner: 4.688vw;
 	}
 
-	@include desktop {
+	@include lg {
 		--inner: 7.813vw;
 	}
 }

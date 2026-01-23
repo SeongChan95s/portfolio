@@ -13,6 +13,7 @@ import { matchMediaListener } from './utils/matchMedia';
 import ReactLenis from 'lenis/react';
 import './features/gsap/initialGSAP';
 import CursorFollower from './components/global/Cursor/CursorFollower';
+import { getUserDevice } from './utils/getUserDevice';
 
 matchMediaListener();
 
@@ -36,6 +37,6 @@ createRoot(document.getElementById('root')!).render(
 		<Wrapper>
 			<Router />
 		</Wrapper>
-		<CursorFollower />
+		{getUserDevice() == 'Web' && <CursorFollower />}
 	</HelmetProvider>
 );
