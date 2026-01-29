@@ -228,13 +228,22 @@ export const projectsData: Project[] = [
 		concept: '',
 		features: [
 			{
-				title: 'CSS&script 실시간 반응형 웹'
+				image:
+					'https://seongchan-portfolio-2024.s3.ap-northeast-2.amazonaws.com/project/hotflo/point01.gif',
+				title: 'CSS&script 실시간 반응형 웹',
+				desc: '- 무한 스와이프 슬라이드를 적용하여 처음으로 돌아오기 위해 여러번 스와이프하지 않아도 됩니다.\n- 태블릿과 모바일에서 슬라이드 우측에 비활성화된 컨텐츠를 노출함으로써 다른 컨텐츠가 있음을 알 수 있도록 안정적인 사용자 경험을 전달합니다.\n- 기기에 따라 열(column)이 다른 반응형으로 제작했습니다.'
 			},
 			{
-				title: '기기에 따라 패널, 바텀시트로 전환되는 반응형 퀵메뉴'
+				image:
+					'https://seongchan-portfolio-2024.s3.ap-northeast-2.amazonaws.com/project/hotflo/point02.gif',
+				title: '기기에 따라 패널, 바텀시트로 전환되는 반응형 퀵메뉴',
+				desc: '- 서비스 이용을 위해 별도 페이지로 이동하지 않아도 쉽고 빠르게 접근 할 수 있도록 반응형 퀵 패널을 제작하였습니다.\n- 데스크탑에서 사용자의 스크롤에 따라 화면 우측에 고정되고, 태블릿과 모바일에서 드로어 패널로 하단에 고정됩니다.'
 			},
 			{
-				title: '웹 표준(W3C) 및 웹 접근성, 크로스 브라우징'
+				image:
+					'https://seongchan-portfolio-2024.s3.ap-northeast-2.amazonaws.com/project/hotflo/point03.png',
+				title: '웹 표준(W3C) 및 웹 접근성, 크로스 브라우징',
+				desc: '- 브라우저마다 상이한 내장 스타일을 일관되게 유지하고 크로스 브라우징에 용이하게 제작했습니다.\n- 스와이프 슬라이드에 시각장애인 리더기를 위한 접근성 메소드를 사용했습니다.\n- 애플 모바일 기기에서 하단 앱 바의 요소가 온전히 보일 수 있도록 안전영역(safe area)을 확보했습니다.\n- matchMedia를 사용하여 브라우저의 너비를 조절해도 스크립트가 실시간으로 적용되어 인터페이스가 망가지지 않도록 하였습니다.'
 			}
 		],
 		languages: ['html5', 'css3', 'javascript', 'jquery'],
@@ -284,7 +293,6 @@ export const projectsData: Project[] = [
 		],
 		slogan: 'today tour easy and fast travel platform',
 		languages: ['html5', 'css3'],
-		libraries: null,
 		tools: ['adobe photoshop', 'adobe illustrator', 'visual code'],
 		tasks: [
 			'리서치',

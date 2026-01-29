@@ -1,0 +1,13 @@
+.marquee {
+	width: 100%;
+	white-space: nowrap;
+	pointer-events: none;
+	:global(.swiper-wrapper) {
+		-webkit-transition-timing-function: linear;
+		transition-timing-function: linear;
+
+		:global(.swiper-slide) {
+			width: auto;
+		}
+	}
+}

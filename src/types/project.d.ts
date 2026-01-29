@@ -82,7 +82,7 @@ interface Project {
 		image?: string;
 	}[];
 	languages: Language[];
-	libraries: Library[] | null;
+	libraries?: Library[];
 	tools: Tool[];
 	links: { [key: string]: string }[];
 	contribution: number;

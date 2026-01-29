@@ -242,11 +242,13 @@ function ToggleButton({ animate, toggle }: { animate: string; toggle: () => void
 			className="toggle-button cursor-pointer fixed top-9 right-9 w-52 h-52 flex justify-center items-center pointer-events-auto mix-blend-difference z-99"
 			onClick={toggle}>
 			<motion.svg
+				initial="closed"
 				animate={animate}
 				width="1.4375rem"
 				height="1.4375rem"
 				viewBox="0 0 23 23">
 				<Path
+					d="M 2 2.5 L 20 2.5"
 					variants={{
 						closed: { d: 'M 2 2.5 L 20 2.5' },
 						open: { d: 'M 3 16.5 L 17 2.5' }
@@ -261,6 +263,7 @@ function ToggleButton({ animate, toggle }: { animate: string; toggle: () => void
 					transition={{ duration: 0.1 }}
 				/>
 				<Path
+					d="M 2 16.346 L 20 16.346"
 					variants={{
 						closed: { d: 'M 2 16.346 L 20 16.346' },
 						open: { d: 'M 3 2.5 L 17 16.346' }
