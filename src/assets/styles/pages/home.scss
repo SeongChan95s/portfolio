@@ -1,144 +1,322 @@
-@use 'sass:math';
-
 .home-page {
+	section {
+		display: flex;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+	}
+
 	.intro-section {
-		background: url('https://firebasestorage.googleapis.com/v0/b/portfolio-bac70.firebasestorage.app/o/Home%2Fintro_bg.jpg?alt=media&token=e1aeb562-0610-493c-8cd2-2555095e7558')
-			center/cover no-repeat;
-		// transform: rotateZ(45deg);
+		position: relative;
+		flex-direction: column;
+		overflow: hidden;
+		background: linear-gradient(to right, #111111, #1d1d1d);
 
-		.circle-wrap {
-			position: absolute;
-			top: 3vw;
-			right: 7vw;
+		.intro-content {
+			position: relative;
+			z-index: 10;
 			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			gap: 1.5rem;
+			padding: 0 10vw;
+		}
 
-			.nested-circle {
-				width: 10vw;
-				height: 10vw;
-				border: 1px solid var(--color-white);
-				border-radius: 100%;
+		.intro-bracket-wrap {
+			display: flex;
+			align-items: center;
+			gap: clamp(0.8rem, 2vw, 2rem);
+		}
 
-				&:nth-child(2) {
-					margin: 0 -2.5vw;
-				}
+		.intro-bracket {
+			font-size: clamp(4rem, 10vw, 9rem);
+			line-height: 1;
+			color: rgba(255, 255, 255, 0.15);
+			user-select: none;
+		}
+
+		// 타이핑 커서 — h3 내부에 위치, 글자 추가 시 자연스럽게 밀려남
+		.intro-typing-cursor {
+			display: inline-block;
+			width: 3px;
+			height: 0.85em; // font-size 기준 상대 높이
+			background-color: rgba(255, 255, 255, 0.9);
+			vertical-align: middle;
+			margin-left: 0.04em;
+			border-radius: 1px;
+		}
+
+		.intro-title {
+			font-size: clamp(3.5rem, 9vw, 8.5rem);
+			font-weight: 700;
+			line-height: 1;
+			letter-spacing: 0.08em;
+			color: rgb(238, 238, 238);
+
+			// background: linear-gradient(135deg, #845ec2 0%, #d65db1 50%, #ff6f91 100%);
+			// background-clip: text;
+			// -webkit-background-clip: text;
+			// -webkit-text-fill-color: transparent;
+		}
+
+		.intro-line {
+			width: min(60%, 420px);
+			height: 1px;
+			transform-origin: center;
+			background: linear-gradient(
+				90deg,
+				transparent 0%,
+				rgba(255, 255, 255, 0.6) 50%,
+				transparent 100%
+			);
+		}
+
+		.intro-subtitle {
+			@include body-1;
+
+			letter-spacing: 0.35em;
+			text-transform: uppercase;
+			color: rgba(255, 255, 255, 0.6);
+		}
+
+		.intro-terminal {
+			display: flex;
+			align-items: center;
+			gap: 0.6rem;
+			padding: 0.6rem 1.2rem;
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			border-radius: 6px;
+			background: rgba(255, 255, 255, 0.03);
+
+			&-prompt {
+				color: rgba(140, 180, 255, 0.8);
+				font-family: 'Heebo', monospace;
+				font-size: 0.85rem;
+				font-weight: 500;
+			}
+
+			&-text {
+				@include body-3;
+
+				color: rgba(255, 255, 255, 0.5);
+			}
+
+			&-cursor {
+				display: inline-block;
+				width: 2px;
+				height: 1em;
+				background-color: rgba(140, 180, 255, 0.7);
+				animation: blink-cursor 1s step-end infinite;
 			}
 		}
 
-		.star-wrap {
+		@keyframes blink-cursor {
+			0%,
+			100% {
+				opacity: 1;
+			}
+
+			50% {
+				opacity: 0;
+			}
+		}
+
+		// 기술 태그
+		.intro-tags {
+			display: flex;
+			gap: 0.6rem;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
+
+		.intro-tag {
+			@include label-2;
+
+			padding: 0.3rem 0.9rem;
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			border-radius: 100px;
+			color: rgba(255, 255, 255, 0.45);
+			letter-spacing: 0.05em;
+			transition: all 0.3s ease;
+
+			&:hover {
+				color: rgba(255, 255, 255, 0.9);
+				border-color: rgba(140, 180, 255, 0.4);
+				background: rgba(140, 180, 255, 0.08);
+			}
+		}
+
+		// 스크롤 인디케이터
+		.intro-scroll-indicator {
 			position: absolute;
-			width: 100vw;
-			height: 150svh;
-			transform: rotateZ(45deg);
-			$shooting-time: 3000ms;
+			bottom: 2.5rem;
+			left: 50%;
+			transform: translateX(-50%);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+			z-index: 10;
 
-			.shooting-star {
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				height: 2px;
-				background: linear-gradient(-45deg, rgb(255, 255, 255), rgba(0, 0, 255, 0));
-				border-radius: 999px;
-				filter: drop-shadow(0 0 6px rgba(105, 155, 255, 1));
-				animation: tail $shooting-time ease-in-out infinite,
-					shooting $shooting-time ease-in-out infinite;
-
-				&::before {
-					content: '';
-					position: absolute;
-					top: calc(50% - 1px);
-					right: 0;
-					height: 2px;
-					background: linear-gradient(
-						-45deg,
-						rgba(0, 0, 255, 0),
-						rgb(255, 255, 255),
-						rgba(0, 0, 255, 0)
-					);
-					transform: translateX(50%) rotateZ(45deg);
-					border-radius: 100%;
-					animation: shining $shooting-time ease-in-out infinite;
-				}
-
-				&::after {
-					content: '';
-					position: absolute;
-					top: calc(50% - 1px);
-					right: 0;
-					height: 2px;
-					background: linear-gradient(
-						-45deg,
-						rgba(0, 0, 255, 0),
-						rgb(255, 255, 255),
-						rgba(0, 0, 255, 0)
-					);
-					transform: translateX(50%) rotateZ(45deg);
-					border-radius: 100%;
-					animation: shining $shooting-time ease-in-out infinite;
-					transform: translateX(50%) rotateZ(-45deg);
-				}
-
-				@for $i from 1 through 20 {
-					&:nth-child(#{$i}) {
-						$delay: math.random(9999) + 0ms;
-						top: calc(50% - #{math.random(200) - 50vh});
-						left: calc(50% - #{math.random(50) * 0.5vw});
-						animation-delay: $delay;
-						opacity: calc(math.random(50) / 100 + 0.5);
-
-						&::before,
-						&::after {
-							animation-delay: $delay;
-						}
-					}
-				}
+			&-text {
+				font-size: 0.65rem;
+				letter-spacing: 0.25em;
+				color: rgba(255, 255, 255, 0.35);
 			}
 
-			@keyframes tail {
-				0% {
-					width: 0;
-				}
+			&-line {
+				width: 1px;
+				height: 2rem;
+				background: linear-gradient(
+					180deg,
+					rgba(255, 255, 255, 0.4) 0%,
+					transparent 100%
+				);
+			}
+		}
+	}
 
-				30% {
-					width: 100px;
-				}
+	// ──────────────────────────────────────
+	// Animation 섹션
+	// ──────────────────────────────────────
+	.animation-section {
+		flex-direction: column;
+		text-align: center;
+		background-color: rgb(126, 34, 206); // purple-700
 
-				100% {
-					width: 0;
-				}
+		.animation-content {
+			text-align: center;
+		}
+
+		.animation-title {
+			font-size: 3rem;
+			font-weight: 700;
+			margin-bottom: 1.5rem;
+		}
+
+		.animation-desc {
+			font-size: 1.25rem;
+			max-width: 42rem;
+			margin: 0 auto 2rem;
+			color: rgb(243, 232, 255); // purple-100
+		}
+
+		.animation-cards {
+			display: flex;
+			gap: 1rem;
+		}
+
+		.animation-card {
+			background: rgba(168, 85, 247, 0.3); // purple-500/30
+			padding: 2rem;
+			border-radius: 1rem;
+			backdrop-filter: blur(4px);
+		}
+	}
+
+	// ──────────────────────────────────────
+	// Responsive 섹션
+	// ──────────────────────────────────────
+	.responsive-section {
+		flex-direction: column;
+		text-align: center;
+		background-color: rgb(225, 29, 72); // rose-600
+
+		.responsive-inner {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 3rem;
+			max-width: 72rem;
+			padding: 0 1.5rem;
+
+			@include md {
+				flex-direction: row;
+			}
+		}
+
+		.responsive-text,
+		.responsive-visual {
+			flex: 1;
+		}
+
+		.responsive-title {
+			font-size: 3rem;
+			font-weight: 700;
+			margin-bottom: 1.5rem;
+		}
+
+		.responsive-desc {
+			font-size: 1.25rem;
+			color: rgb(255, 228, 230); // rose-100
+		}
+
+		.responsive-mockup {
+			background: rgba(255, 255, 255, 0.1);
+			padding: 3rem;
+			border-radius: 1.5rem;
+			backdrop-filter: blur(12px);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+		}
+
+		.responsive-skeleton {
+			height: 1rem;
+			background: rgba(255, 255, 255, 0.2);
+			border-radius: 0.25rem;
+			margin-bottom: 1rem;
+
+			&--w-3-4 {
+				width: 75%;
 			}
 
-			@keyframes shining {
-				0% {
-					width: 0;
-				}
-
-				50% {
-					width: 30px;
-				}
-
-				100% {
-					width: 0;
-				}
+			&--w-1-2 {
+				width: 50%;
 			}
 
-			@keyframes shooting {
-				0% {
-					transform: translateX(0);
-				}
-
-				100% {
-					transform: translateX(300px);
-				}
+			&--w-full {
+				width: 100%;
 			}
 
-			@keyframes sky {
-				0% {
-					transform: rotate(45deg);
-				}
+			&--lg {
+				height: 8rem;
+				background: rgba(255, 255, 255, 0.1);
+				margin-bottom: 0;
+			}
+		}
+	}
 
-				100% {
-					transform: rotate(45 + 360deg);
-				}
+	// ──────────────────────────────────────
+	// CTA 섹션
+	// ──────────────────────────────────────
+	.cta-section {
+		background-color: var(--color-black);
+
+		.cta-content {
+			text-align: center;
+		}
+
+		.cta-title {
+			font-size: 3rem;
+			font-weight: 700;
+			margin-bottom: 1.5rem;
+			background: linear-gradient(to right, rgb(96, 165, 250), rgb(52, 211, 153));
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+		}
+
+		.cta-button {
+			margin-top: 2rem;
+			padding: 0.75rem 2rem;
+			background-color: var(--color-white);
+			color: var(--color-black);
+			border-radius: 9999px;
+			font-weight: 700;
+			transition: transform 0.2s ease;
+
+			&:hover {
+				transform: scale(1.05);
 			}
 		}
 	}

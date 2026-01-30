@@ -1,0 +1,104 @@
+.splitting {
+	display: inline-grid;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.textPrimary,
+.textAlt {
+	grid-area: 1 / 1;
+}
+
+.charWrap {
+	display: inline-block;
+	overflow: hidden;
+}
+
+.char {
+	display: inline-block;
+	transition: transform 0.5s cubic-bezier(0.9, 0, 0.2, 1);
+}
+
+// ── slide-vertical ──
+.slide-vertical {
+	--text-color: #fff;
+
+	.char {
+		color: var(--text-color);
+	}
+
+	// 단일 텍스트: 위에서 슬라이드 인
+	.textPrimary .char {
+		transform: translateY(-100%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
+
+	&:global(.active) .textPrimary .char {
+		transform: translateY(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+	}
+
+	// 교대 모드
+	&.alternating {
+		.textPrimary .char {
+			transform: translateY(0);
+			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+		}
+
+		.textAlt .char {
+			transform: translateY(-100%);
+			transition-delay: calc(0.02s * var(--char-index));
+		}
+
+		&:global(.active) .textPrimary .char {
+			transform: translateY(100%);
+			transition-delay: calc(0.02s * var(--char-index));
+		}
+
+		&:global(.active) .textAlt .char {
+			transform: translateY(0);
+			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+		}
+	}
+}
+
+// ── slide-horizontal ──
+.slide-horizontal {
+	--text-color: #fff;
+
+	.char {
+		color: var(--text-color);
+	}
+
+	.textPrimary .char {
+		transform: translateX(110%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
+
+	&:global(.active) .textPrimary .char {
+		transform: translateX(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+	}
+
+	&.alternating {
+		.textPrimary .char {
+			transform: translateX(0);
+			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+		}
+
+		.textAlt .char {
+			transform: translateX(110%);
+			transition-delay: calc(0.02s * var(--char-index));
+		}
+
+		&:global(.active) .textPrimary .char {
+			transform: translateX(-110%);
+			transition-delay: calc(0.02s * var(--char-index));
+		}
+
+		&:global(.active) .textAlt .char {
+			transform: translateX(0);
+			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+		}
+	}
+}

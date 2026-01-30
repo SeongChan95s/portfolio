@@ -45,7 +45,7 @@ function OnePageScroll({
 
 	return (
 		<>
-			<div className="one-page-scroll relative w-full h-svh overflow-hidden bg-gray-900 text-white">
+			<div className="one-page-scroll relative w-full h-svh overflow-hidden  text-white">
 				<motion.div
 					className="one-page-scroll-section-wrapper w-full h-full"
 					animate={controls}>
