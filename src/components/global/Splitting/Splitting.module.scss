@@ -4,12 +4,12 @@
 	line-height: inherit;
 }
 
-.textPrimary,
-.textAlt {
+.text-primary,
+.text-alt {
 	grid-area: 1 / 1;
 }
 
-.charWrap {
+.char-wrap {
 	display: inline-block;
 	overflow: hidden;
 }
@@ -23,42 +23,40 @@
 .slide-vertical {
 	--text-color: #fff;
 
-	.char {
-		color: var(--text-color);
-	}
+	// .char {
+	// 	color: var(--text-color);
+	// }
 
 	// 단일 텍스트: 위에서 슬라이드 인
-	.textPrimary .char {
+	.text-primary .char {
 		transform: translateY(-100%);
 		transition-delay: calc(0.02s * var(--char-index));
 	}
 
-	&:global(.active) .textPrimary .char {
+	&.active .text-primary .char {
 		transform: translateY(0);
 		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
 	}
 
 	// 교대 모드
-	&.alternating {
-		.textPrimary .char {
-			transform: translateY(0);
-			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
-		}
+	.text-primary .char {
+		transform: translateY(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+	}
 
-		.textAlt .char {
-			transform: translateY(-100%);
-			transition-delay: calc(0.02s * var(--char-index));
-		}
+	.text-alt .char {
+		transform: translateY(-100%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
 
-		&:global(.active) .textPrimary .char {
-			transform: translateY(100%);
-			transition-delay: calc(0.02s * var(--char-index));
-		}
+	&.active .text-primary .char {
+		transform: translateY(100%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
 
-		&:global(.active) .textAlt .char {
-			transform: translateY(0);
-			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
-		}
+	&.active .text-alt .char {
+		transform: translateY(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
 	}
 }
 
@@ -70,35 +68,33 @@
 		color: var(--text-color);
 	}
 
-	.textPrimary .char {
+	.text-primary .char {
 		transform: translateX(110%);
 		transition-delay: calc(0.02s * var(--char-index));
 	}
 
-	&:global(.active) .textPrimary .char {
+	&.active .text-primary .char {
 		transform: translateX(0);
 		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
 	}
 
-	&.alternating {
-		.textPrimary .char {
-			transform: translateX(0);
-			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
-		}
+	.text-primary .char {
+		transform: translateX(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
+	}
 
-		.textAlt .char {
-			transform: translateX(110%);
-			transition-delay: calc(0.02s * var(--char-index));
-		}
+	.text-alt .char {
+		transform: translateX(110%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
 
-		&:global(.active) .textPrimary .char {
-			transform: translateX(-110%);
-			transition-delay: calc(0.02s * var(--char-index));
-		}
+	&.active .text-primary .char {
+		transform: translateX(-110%);
+		transition-delay: calc(0.02s * var(--char-index));
+	}
 
-		&:global(.active) .textAlt .char {
-			transform: translateX(0);
-			transition-delay: calc(0.2s + (0.02s * var(--char-index)));
-		}
+	&.active .text-alt .char {
+		transform: translateX(0);
+		transition-delay: calc(0.2s + (0.02s * var(--char-index)));
 	}
 }

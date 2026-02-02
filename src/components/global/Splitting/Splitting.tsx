@@ -4,7 +4,8 @@ import {
 	Children,
 	isValidElement,
 	type CSSProperties,
-	type ReactNode
+	type ReactNode,
+	useState
 } from 'react';
 import styles from './Splitting.module.scss';
 
@@ -12,8 +13,8 @@ interface SplittingProps {
 	className?: string;
 	animation?: 'slide-vertical' | 'slide-horizontal';
 	trigger?: 'hover' | 'view';
+	alternate?: boolean;
 	children: ReactNode;
-	/** 교대 애니메이션 간격 (ms) */
 	interval?: number;
 }
 
@@ -38,31 +39,58 @@ function toChars(text: string) {
 }
 
 export default function Splitting({
-	className,
+	className: classNameProp,
 	animation,
-	trigger = 'view',
+	trigger = 'hover',
+	alternate = false,
 	children,
 	interval = 3000
 }: SplittingProps) {
 	const texts = extractTexts(children);
-	const isAlternating = texts.length > 1;
-
-	const classes = [
-		styles.splitting,
-		animation && styles[animation],
-		isAlternating && styles.alternating,
-		className
-	]
-		.filter(Boolean)
-		.join(' ');
-
+	const [isActive, setIsActive] = useState(false);
+	const [isHover, setIsHover] = useState(false);
 	const ref = useRef<HTMLSpanElement>(null);
+
+	useEffect(() => {
+		let timerId: ReturnType<typeof setInterval> | null = null;
+		if (trigger == 'hover' && !alternate) {
+			isHover ? setIsActive(true) : setIsActive(false);
+		} else if (trigger == 'hover' && alternate) {
+			if (isHover) {
+				if (!timerId) {
+					setIsActive(prev => !prev);
+					timerId = setInterval(() => {
+						setIsActive(prev => !prev);
+					}, interval);
+				}
+			} else {
+				setIsActive(false);
+				if (timerId) clearInterval(timerId);
+			}
+		}
+		return () => {
+			if (timerId) clearInterval(timerId);
+		};
+	}, [isHover]);
 
 	useEffect(() => {
 		if (!ref.current) return;
 		const el = ref.current;
 
-		if (isAlternating) {
+		if (trigger === 'view' && !alternate) {
+			const observer = new IntersectionObserver(entries => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						setIsActive(true);
+					} else {
+						setIsActive(false);
+					}
+				});
+			});
+
+			observer.observe(el);
+			return () => observer.disconnect();
+		} else if (trigger === 'view' && alternate) {
 			let timerId: ReturnType<typeof setInterval> | null = null;
 
 			const observer = new IntersectionObserver(entries => {
@@ -70,7 +98,7 @@ export default function Splitting({
 					if (entry.isIntersecting) {
 						if (!timerId) {
 							timerId = setInterval(() => {
-								el.classList.toggle('active');
+								setIsActive(prev => !prev);
 							}, interval);
 						}
 					} else {
@@ -78,7 +106,7 @@ export default function Splitting({
 							clearInterval(timerId);
 							timerId = null;
 						}
-						el.classList.remove('active');
+						setIsActive(false);
 					}
 				});
 			});
@@ -89,28 +117,26 @@ export default function Splitting({
 				if (timerId) clearInterval(timerId);
 			};
 		}
-
-		if (trigger === 'view') {
-			const observer = new IntersectionObserver(entries => {
-				entries.forEach(entry => {
-					if (entry.isIntersecting) {
-						el.classList.add('active');
-					} else {
-						el.classList.remove('active');
-					}
-				});
-			});
-
-			observer.observe(el);
-			return () => observer.disconnect();
-		}
-	}, [trigger, isAlternating, interval]);
+	}, [trigger, alternate, interval]);
 
 	const primaryChars = toChars(texts[0] || '');
-	const altChars = isAlternating ? toChars(texts[1] || '') : [];
+	const altChars = texts.length > 1 ? toChars(texts[1] || '') : [];
+	const className = [
+		styles.splitting,
+		animation && styles[animation],
+		alternate && styles.alternating,
+		isActive && styles.active,
+		classNameProp
+	]
+		.filter(Boolean)
+		.join(' ');
 
 	return (
-		<span className={classes} ref={ref}>
+		<span
+			className={className}
+			ref={ref}
+			onMouseEnter={() => trigger == 'hover' && setIsHover(true)}
+			onMouseLeave={() => trigger == 'hover' && setIsHover(false)}>
 			<span className={styles.textPrimary}>
 				{primaryChars.map((char, i) => (
 					<span
@@ -121,7 +147,7 @@ export default function Splitting({
 					</span>
 				))}
 			</span>
-			{isAlternating && (
+			{altChars && (
 				<span className={styles.textAlt}>
 					{altChars.map((char, i) => (
 						<span

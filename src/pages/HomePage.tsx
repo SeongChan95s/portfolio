@@ -81,12 +81,16 @@ export default function HomePage() {
 							className="intro-content">
 							<motion.div variants={introItemVariants} className="intro-bracket-wrap">
 								<span className="intro-bracket font-bebasNeue">{'{'}</span>
-								<Splitting
-									className="intro-title font-bebasNeue"
-									animation="slide-vertical">
-									<span>COME</span>
-									<span>SEONGCHAN</span>
-								</Splitting>
+								<h1>
+									<Splitting
+										className="intro-title font-bebasNeue"
+										animation="slide-vertical"
+										trigger="hover"
+										alternate>
+										<span>SEONG CHAN</span>
+										<span>SMART CODE</span>
+									</Splitting>
+								</h1>
 								<span className="intro-bracket font-bebasNeue">{'}'}</span>
 							</motion.div>
 
