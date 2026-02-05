@@ -6,6 +6,7 @@ import { type Variants } from 'motion';
 import { NavLink } from 'react-router-dom';
 import { useNavStore } from '../../../stores/useNavStore';
 import { useLenis } from 'lenis/react';
+import styles from './ToggleNav.module.scss';
 
 const navVariants: Variants = {
 	open: {
@@ -132,7 +133,7 @@ export default function ToggleNav() {
 	return (
 		<>
 			<motion.nav
-				className="fixed inset-0 z-99 select-none pointer-events-none"
+				className={styles.nav}
 				initial={false}
 				animate={
 					isNavigating
@@ -146,7 +147,7 @@ export default function ToggleNav() {
 				custom={height}
 				ref={navBarRef}>
 				<motion.div
-					className="background absolute inset-y-0 left-0 w-full bg-gray-950 -z-1"
+					className={styles.background}
 					variants={backgroundVariants}
 				/>
 				<AnimatePresence>
@@ -193,41 +194,29 @@ function ToggleContainer({
 
 	return (
 		<motion.div
-			className="toggle-nav-container relative w-full h-full pointer-events-auto"
+			className={styles.container}
 			initial="closed"
 			animate={currentState}
 			exit="closed"
 			variants={navVariants}>
-			<motion.div className="flex flex-col justify-center items-start h-full pr-[10vw] pl-[10vw] gap-[clamp(12px,0.8vw,24px)]">
+			<motion.div className={styles.menu}>
 				<motion.div variants={itemVariants}>
-					<NavLink
-						to="/"
-						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
-						onClick={handleClick}>
+					<NavLink to="/" className={styles.link} onClick={handleClick}>
 						HOME
 					</NavLink>
 				</motion.div>
 				<motion.div variants={itemVariants}>
-					<NavLink
-						to="/about"
-						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
-						onClick={handleClick}>
+					<NavLink to="/about" className={styles.link} onClick={handleClick}>
 						ABOUT
 					</NavLink>
 				</motion.div>
 				<motion.div variants={itemVariants}>
-					<NavLink
-						to="/project"
-						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
-						onClick={handleClick}>
+					<NavLink to="/project" className={styles.link} onClick={handleClick}>
 						PROJECT
 					</NavLink>
 				</motion.div>
 				<motion.div variants={itemVariants}>
-					<NavLink
-						to="/blog"
-						className="block text-[clamp(32px,10vw,72px)] font-bold leading-none text-white hover:text-black hover:[-webkit-text-stroke-width:1px] hover:[-webkit-text-stroke-color:white] stroke- transition-colors [.active]:text-black! [.active]:[-webkit-text-stroke-width:1px] [.active]:[-webkit-text-stroke-color:white]"
-						onClick={handleClick}>
+					<NavLink to="/blog" className={styles.link} onClick={handleClick}>
 						BLOG
 					</NavLink>
 				</motion.div>
@@ -239,7 +228,7 @@ function ToggleContainer({
 function ToggleButton({ animate, toggle }: { animate: string; toggle: () => void }) {
 	return (
 		<button
-			className="toggle-button cursor-pointer fixed top-9 right-9 w-52 h-52 flex justify-center items-center pointer-events-auto mix-blend-difference z-99"
+			className={styles['toggle-button']}
 			onClick={toggle}>
 			<motion.svg
 				initial="closed"

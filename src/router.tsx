@@ -9,6 +9,7 @@ import ProjectPage from './pages/ProjectPage';
 import BlogPage from './pages/BlogPage';
 import ContactPage from './pages/ContactPage';
 import { lazy } from 'react';
+import SubLayout from './layouts/SubLayout';
 
 const ComponentGuidePage = lazy(() => import('./pages/guide/common/ComponentGuidePage'));
 const PopupGuidePage = lazy(() => import('./pages/guide/common/PopupGuidePage'));
@@ -26,27 +27,41 @@ const router = createBrowserRouter([
 				element: <HomePage />
 			},
 			{
-				path: '/about',
-				element: <AboutPage />
-			},
-			{
-				path: '/project',
-				element: <ProjectPage />
-			},
-			{
-				path: '/project/:id',
-				element: <DetailPage />
-			},
-			{
-				path: '/blog',
-				element: <BlogPage />
-			},
-			{
-				path: '/contact',
-				element: <ContactPage />
+				element: <SubLayout />,
+				children: [
+					{
+						path: '/about',
+						element: <AboutPage />
+					},
+					{
+						path: '/project',
+						element: <ProjectPage />
+					},
+					{
+						path: '/project/:id',
+						element: <DetailPage />
+					},
+					{
+						path: '/blog',
+						element: <BlogPage />
+					},
+					{
+						path: '/contact',
+						element: <ContactPage />
+					}
+				]
 			}
 		]
 	},
+	// {
+	// 	element: <SubLayout />,
+	// 	children: [
+	// 		{
+	// 			path: '/project/:id',
+	// 			element: <DetailPage />
+	// 		}
+	// 	]
+	// },
 	{
 		element: <GuideLayout />,
 		path: '/guide',

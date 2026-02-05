@@ -225,7 +225,7 @@ export const projectsData: Project[] = [
 		categories: ['creative', 'responsive'],
 		slogan: 'hotplace search & waiting platform',
 		desc: '트렌디한 핫플레이스 탐색 및 예약 & 웨이팅 플랫폼',
-		concept: '',
+		concept: '컨셉입니다. 컨셉입니다. 컨셉입니다.',
 		features: [
 			{
 				image:

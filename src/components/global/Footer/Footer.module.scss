@@ -1,0 +1,144 @@
+.footer {
+	margin-top: clamp(32px, 20vw, 96px);
+	border-top: 1px solid var(--color-gray-200);
+	background-color: var(--color-surface-01);
+	padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.2rem, 2.5vw, 1.8rem);
+
+	.inner {
+		@include layout-width;
+
+		display: flex;
+		flex-direction: column;
+		gap: clamp(2rem, 4vw, 3rem);
+		padding: 0 $inner;
+
+		@include md {
+			padding: 0 4.688vw;
+		}
+
+		@include lg {
+			padding: 0 7.813vw;
+		}
+	}
+
+	&-top {
+		display: flex;
+		flex-direction: column;
+		gap: 2.625rem;
+
+		@include md {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+
+		.left {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.nav {
+			display: flex;
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+	}
+
+	&-bar {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-top: clamp(1rem, 2vw, 1.5rem);
+		border-top: 1px solid var(--color-gray-100);
+	}
+}
+
+.left {
+	.label {
+		@include label-2;
+		color: var(--color-gray-400);
+	}
+
+	.email {
+		margin-top: 0.4rem;
+		@include headline-2;
+		font-weight: 700;
+		color: var(--color-gray-900);
+		transition: color 0.2s ease;
+
+		&:hover {
+			color: white;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: black;
+		}
+	}
+
+	.tel {
+		margin-top: 8px;
+		@include label-2;
+		font-weight: 400;
+		color: var(--color-gray-500);
+	}
+}
+
+.nav {
+	&-title {
+		@include label-3;
+
+		color: var(--color-gray-400);
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+
+	&-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.125rem;
+
+		@include md {
+			align-items: flex-end;
+		}
+
+		.nav-link {
+			@include body-3;
+
+			color: var(--color-gray-600);
+			transition: color 0.2s ease;
+
+			&:hover {
+				color: var(--color-gray-950);
+			}
+		}
+	}
+}
+
+.footer-bar {
+	.copyright {
+		@include label-4;
+		color: var(--color-gray-400);
+	}
+
+	.social-link-wrap {
+		.social-link {
+			display: flex;
+			align-items: center;
+			gap: 0.35rem;
+			color: var(--color-gray-400);
+			transition: color 0.2s ease;
+
+			&:hover {
+				color: var(--color-gray-800);
+			}
+
+			svg {
+				width: 1rem;
+				height: 1rem;
+			}
+
+			span {
+				@include label-4;
+				line-height: 1;
+			}
+		}
+	}
+}

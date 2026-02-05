@@ -101,7 +101,7 @@ export default function DetailPage() {
 											<RollupButton
 												shape="round"
 												size={
-													mediaQuery == 'sm' ? 'xs' : mediaQuery == 'md' ? 'md' : 'lg'
+													mediaQuery == 'sm' ? 'xxs' : mediaQuery == 'md' ? 'md' : 'lg'
 												}
 												key={value}
 												onClick={() => window.open(value)}>
@@ -135,7 +135,7 @@ export default function DetailPage() {
 							<h5 className="sub-title">Tasks</h5>
 							<ul className="text-wrap">
 								{project.tasks.map(task => (
-									<li>{task}</li>
+									<li key={task}>{task}</li>
 								))}
 							</ul>
 						</div>
@@ -143,7 +143,7 @@ export default function DetailPage() {
 							<h5 className="sub-title">Languages</h5>
 							<ul className="text-wrap">
 								{project.languages.map(lng => (
-									<li>{lng}</li>
+									<li key={lng}>{lng}</li>
 								))}
 							</ul>
 						</div>
@@ -152,7 +152,7 @@ export default function DetailPage() {
 								<h5 className="sub-title">Libraries</h5>
 								<ul className="text-wrap">
 									{project.libraries.map(lib => (
-										<li>{lib}</li>
+										<li key={lib}>{lib}</li>
 									))}
 								</ul>
 							</div>
@@ -161,7 +161,7 @@ export default function DetailPage() {
 							<h5 className="sub-title">Tools</h5>
 							<ul className="text-wrap">
 								{project.tools.map(tool => (
-									<li>{tool}</li>
+									<li key={tool}>{tool}</li>
 								))}
 							</ul>
 						</div>
@@ -174,14 +174,18 @@ export default function DetailPage() {
 
 						<div className="section-body">
 							{project.features.map(feat => (
-								<article>
+								<article key={feat.title}>
 									{feat.image && (
 										<div className="feature-img">
 											<img src={feat.image} alt="" />
 										</div>
 									)}
 									<h4 className="title">{feat.title}</h4>
-									<p className="desc">{feat.desc}</p>
+									<ul className="desc">
+										{feat.desc?.split('\n').map(paragraph => (
+											<li>{paragraph}</li>
+										))}
+									</ul>
 								</article>
 							))}
 						</div>
