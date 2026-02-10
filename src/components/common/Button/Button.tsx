@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { classNames } from '../../../utils/classNames';
 import styles from './Button.module.scss';
 
@@ -17,21 +18,24 @@ interface ButtonProps {
 	children?: React.ReactNode;
 }
 
-export default function Button({
-	id,
-	className: classNameProp,
-	type = 'button',
-	size = 'md',
-	color = 'normal',
-	variant = 'filled',
-	shape = 'rounded',
-	fill = false,
-	form,
-	formAction,
-	onClick,
-	disabled = false,
-	children
-}: ButtonProps) {
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button(
+	{
+		id,
+		className: classNameProp,
+		type = 'button',
+		size = 'md',
+		color = 'normal',
+		variant = 'filled',
+		shape = 'rounded',
+		fill = false,
+		form,
+		formAction,
+		onClick,
+		disabled = false,
+		children
+	}: ButtonProps,
+	inheritRef
+) {
 	const className = classNames(
 		styles.button,
 		styles[variant],
@@ -51,8 +55,9 @@ export default function Button({
 			type={type}
 			form={form}
 			formAction={formAction}
-			onClick={onClick}>
+			onClick={onClick}
+			ref={inheritRef}>
 			{children}
 		</button>
 	);
-}
+});
