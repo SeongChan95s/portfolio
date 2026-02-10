@@ -10,6 +10,9 @@ export default defineConfig(({ mode }) => {
 	const isDev = mode === 'development';
 
 	return {
+		server: {
+			port: 3000
+		},
 		resolve: {
 			alias: {
 				'@': path.resolve(__dirname, './src')
@@ -28,9 +31,6 @@ export default defineConfig(({ mode }) => {
         `
 				}
 			}
-		},
-		server: {
-			port: 3000
 		},
 		plugins: [
 			react({

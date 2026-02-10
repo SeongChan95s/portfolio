@@ -14,6 +14,7 @@ import ReactLenis from 'lenis/react';
 import './features/gsap/initialGSAP';
 import CursorFollower from './components/global/Cursor/CursorFollower';
 import { getUserDevice } from './utils/getUserDevice';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 matchMediaListener();
 
@@ -31,12 +32,16 @@ const updateSW = registerSW({
 	}
 });
 
+const queryClient = new QueryClient(); // 2. 초기화
+
 createRoot(document.getElementById('root')!).render(
-	<HelmetProvider>
-		<ReactLenis root />
-		<Wrapper>
-			<Router />
-		</Wrapper>
-		{getUserDevice() == 'Web' && <CursorFollower />}
-	</HelmetProvider>
+	<QueryClientProvider client={queryClient}>
+		<HelmetProvider>
+			<ReactLenis root />
+			<Wrapper>
+				<Router />
+			</Wrapper>
+			{getUserDevice() == 'Web' && <CursorFollower />}
+		</HelmetProvider>
+	</QueryClientProvider>
 );
