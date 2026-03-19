@@ -81,8 +81,8 @@ export default function DetailPage() {
 						<div className="box">
 							<h5 className="sub-title">Category</h5>
 							<p>
-								{project.categories.map(el => (
-									<span key={el}>{el}</span>
+								{project.categories.map(category => (
+									<span key={category}>{category}</span>
 								))}
 							</p>
 							<h5 className="sub-title">Date</h5>
@@ -96,15 +96,13 @@ export default function DetailPage() {
 							<h5 className="sub-title">Links</h5>
 							<ul className="link-wrap">
 								{project.links.map((link, i) => (
-									<li key={`links_${i}`}>
+									<li key={`link_${i}`}>
 										{Object.entries(link).map(([key, value]) => (
 											<RollupButton
 												shape="round"
-												size={
-													mediaQuery == 'sm' ? 'xxs' : mediaQuery == 'md' ? 'md' : 'lg'
-												}
-												key={value}
-												onClick={() => window.open(value)}>
+												size={mediaQuery == 'sm' ? 'xxs' : 'md'}
+												key={`${key}_${value}`}
+												onClick={() => window.open(value, '_blank')}>
 												{key}
 											</RollupButton>
 										))}
@@ -181,11 +179,13 @@ export default function DetailPage() {
 										</div>
 									)}
 									<h4 className="title">{feat.title}</h4>
-									<ul className="desc">
-										{feat.desc?.split('\n').map(paragraph => (
-											<li>{paragraph}</li>
-										))}
-									</ul>
+									{feat.desc && (
+										<ul className="desc">
+											{feat.desc?.split('\n').map(paragraph => (
+												<li>{paragraph}</li>
+											))}
+										</ul>
+									)}
 								</article>
 							))}
 						</div>

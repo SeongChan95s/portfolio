@@ -51,7 +51,7 @@
 	}
 
 	.project-header {
-		margin-top: 18px;
+		margin-top: 32px;
 		padding-right: var(--inner);
 		padding-left: var(--inner);
 	}
@@ -201,7 +201,7 @@
 				grid-column: span 2;
 			}
 
-			~ article {
+			~ article:has(.desc) {
 				margin-top: 32px;
 			}
 
@@ -217,11 +217,14 @@
 					max-height: inherit;
 					object-fit: contain;
 				}
+
+				+ .title {
+					margin-top: 16px;
+				}
 			}
 			> .title {
-				margin-top: 16px;
 				@include title-4;
-
+				margin-top: 6px;
 				color: var(--color-gray-400);
 			}
 

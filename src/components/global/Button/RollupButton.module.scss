@@ -36,72 +36,72 @@
 
 	// size
 	.xxs {
-		height: 1.875rem;
-		font-size: 0.6875rem;
+		height: 30px;
+		font-size: 11px;
 		font-weight: 500;
-		line-height: 1.875rem;
+		line-height: 30px;
 
 		.children {
-			padding: 0 0.5rem;
-			gap: 0.125rem;
-		}
-
-		:global(.icon) {
-			width: 0.125rem;
-			height: 0.125rem;
-		}
-	}
-	.xs {
-		height: 2rem;
-		font-size: 0.75rem;
-		font-weight: 600;
-		line-height: 2rem;
-
-		.children {
-			padding: 0 0.625rem;
+			padding: 0 10px;
 			gap: 2px;
 		}
 
 		:global(.icon) {
-			width: 0.125rem;
-			height: 0.125rem;
+			width: 2px;
+			height: 2px;
+		}
+	}
+	.xs {
+		height: 2rem;
+		font-size: 12px;
+		font-weight: 600;
+		line-height: 32px;
+
+		.children {
+			padding: 0 10px;
+			gap: 2px;
+		}
+
+		:global(.icon) {
+			width: 2px;
+			height: 2px;
 		}
 	}
 	.sm {
-		height: 2.375rem;
-		font-size: 0.8125rem;
+		height: 38px;
+		font-size: 13px;
 		font-weight: 600;
-		line-height: 2.375rem;
+		line-height: 38px;
 
 		.children {
-			padding: 0 0.8125rem;
-			gap: 0.125rem;
+			padding: 0 13px;
+			gap: 2px;
 		}
 
 		:global(.icon) {
-			width: 0.125rem;
-			height: 0.125rem;
+			width: 2px;
+			height: 2px;
 		}
 	}
 	.md {
-		height: 2.625rem;
-		font-size: 0.875rem;
-		font-weight: 600;
-		line-height: 2.625rem;
+		height: 40px;
+		font-size: 13.5px;
+		font-weight: 500;
+		line-height: 40px;
 		.children {
-			padding: 0 1rem;
-			gap: 0.25rem;
+			padding: 0 16px;
+			gap: 4px;
 		}
 		:global(.icon) {
-			width: 1.375rem;
-			height: 1.375rem;
+			width: 22px;
+			height: 22px;
 		}
 	}
 	.lg {
-		height: 2.875rem;
-		font-size: 0.875rem;
+		height: 46px;
+		font-size: 14px;
 		font-weight: 600;
-		line-height: 2.875rem;
+		line-height: 46px;
 
 		.children {
 			padding: 0 1.125rem;

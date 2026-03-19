@@ -140,6 +140,7 @@ export default function ProjectPage() {
 
 				<ul className={`project-container grid-cols-${gridCols}`}>
 					<AnimatePresence initial={false}>
+						{projects.length == 0 && <div>해당 프로젝트가 없습니다.</div>}
 						{projects.map((project, index) => (
 							<motion.li
 								className="project-item"

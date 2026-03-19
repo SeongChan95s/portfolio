@@ -1,58 +1,10 @@
-import { motion, type Variants } from 'motion/react';
+import { motion } from 'motion/react';
 import OnePageScroll from '../features/scroll/OnePageScroll';
 import { Helmet } from 'react-helmet-async';
 import { useNavStore } from '../stores/useNavStore';
 import { ParticleNetwork } from '../components/global/ParticleNetwork';
 import { Splitting } from '../components/global/Splitting';
 import './../../src/assets/styles/pages/home.scss';
-
-/** intro 섹션 stagger 컨테이너 */
-const introContainerVariants: Variants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: {
-			staggerChildren: 0.15,
-			delayChildren: 0.3
-		}
-	}
-};
-
-/** intro 섹션 자식 요소 페이드업 */
-const introItemVariants: Variants = {
-	hidden: { opacity: 0, y: 30 },
-	visible: {
-		opacity: 1,
-		y: 0,
-		transition: { duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }
-	}
-};
-
-/** intro 섹션 수평 라인 확장 */
-const lineVariants: Variants = {
-	hidden: { scaleX: 0 },
-	visible: {
-		scaleX: 1,
-		transition: { duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94], delay: 0.8 }
-	}
-};
-
-/** 스크롤 인디케이터 바운스 */
-const scrollIndicatorVariants: Variants = {
-	hidden: { opacity: 0 },
-	visible: {
-		opacity: 1,
-		transition: { delay: 2, duration: 0.6 }
-	},
-	bounce: {
-		y: [0, 8, 0],
-		transition: {
-			duration: 1.5,
-			repeat: Infinity,
-			ease: 'easeInOut'
-		}
-	}
-};
 
 export default function HomePage() {
 	const isNavOpen = useNavStore(state => state.isNavOpen);
@@ -73,13 +25,8 @@ export default function HomePage() {
 							maxSpeed={0.3}
 						/>
 
-						<motion.div
-							variants={introContainerVariants}
-							initial="hidden"
-							whileInView="visible"
-							viewport={{ once: true }}
-							className="intro-content">
-							<motion.div variants={introItemVariants} className="intro-bracket-wrap">
+						<div className="intro-content">
+							<div className="intro-bracket-wrap">
 								<span className="intro-bracket font-bebasNeue">{'{'}</span>
 								<h1>
 									<Splitting
@@ -92,41 +39,35 @@ export default function HomePage() {
 									</Splitting>
 								</h1>
 								<span className="intro-bracket font-bebasNeue">{'}'}</span>
-							</motion.div>
+							</div>
 
-							<motion.div variants={lineVariants} className="intro-line" />
+							<div className="intro-line" />
 
-							<motion.p
-								variants={introItemVariants}
-								className="intro-subtitle font-heebo">
+							<p className="intro-subtitle font-heebo">
 								Frontend Developer Portfolio
-							</motion.p>
+							</p>
 
-							<motion.div variants={introItemVariants} className="intro-terminal">
+							<div className="intro-terminal">
 								<span className="intro-terminal-prompt">{'>'}_</span>
 								<span className="intro-terminal-text font-heebo">
-									Building UIUX with smart code &amp; creative motion
+									Building UIUX with smart code
 								</span>
 								<span className="intro-terminal-cursor" />
-							</motion.div>
+							</div>
 
-							<motion.div variants={introItemVariants} className="intro-tags">
+							<div className="intro-tags">
 								{['체계적인', '능동적인', '책임을 다하는'].map(tag => (
 									<span key={tag} className="intro-tag">
 										{tag}
 									</span>
 								))}
-							</motion.div>
-						</motion.div>
+							</div>
+						</div>
 
-						<motion.div
-							variants={scrollIndicatorVariants}
-							initial="hidden"
-							animate={['visible', 'bounce']}
-							className="intro-scroll-indicator">
+						<div className="intro-scroll-indicator">
 							<span className="intro-scroll-indicator-text font-heebo">SCROLL</span>
 							<span className="intro-scroll-indicator-line" />
-						</motion.div>
+						</div>
 					</section>
 
 					<section className="animation-section">

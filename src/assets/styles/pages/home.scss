@@ -12,6 +12,51 @@
 		overflow: hidden;
 		background: linear-gradient(to right, #111111, #1d1d1d);
 
+		@keyframes intro-item-in {
+			from {
+				opacity: 0;
+				transform: translateY(30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes intro-line-in {
+			from {
+				transform: scaleX(0);
+			}
+
+			to {
+				transform: scaleX(1);
+			}
+		}
+
+		@keyframes scroll-indicator-appear {
+			from {
+				opacity: 0;
+				transform: translateX(-50%);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateX(-50%);
+			}
+		}
+
+		@keyframes scroll-indicator-bounce {
+			0%,
+			100% {
+				transform: translateX(-50%) translateY(0);
+			}
+
+			50% {
+				transform: translateX(-50%) translateY(8px);
+			}
+		}
+
 		.intro-content {
 			position: relative;
 			z-index: 10;
@@ -20,10 +65,11 @@
 			align-items: center;
 			text-align: center;
 			gap: 1.5rem;
-			padding: 0 10vw;
 		}
 
 		.intro-bracket-wrap {
+			opacity: 0;
+			animation: intro-item-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.3s;
 			display: flex;
 			align-items: center;
 			gap: clamp(0.8rem, 2vw, 2rem);
@@ -39,7 +85,7 @@
 		.intro-typing-cursor {
 			display: inline-block;
 			width: 3px;
-			height: 0.85em; // font-size 기준 상대 높이
+			height: 0.85em;
 			background-color: rgba(255, 255, 255, 0.9);
 			vertical-align: middle;
 			margin-left: 0.04em;
@@ -52,17 +98,14 @@
 			line-height: 1;
 			letter-spacing: 0.08em;
 			color: rgb(238, 238, 238);
-
-			// background: linear-gradient(135deg, #845ec2 0%, #d65db1 50%, #ff6f91 100%);
-			// background-clip: text;
-			// -webkit-background-clip: text;
-			// -webkit-text-fill-color: transparent;
 		}
 
 		.intro-line {
 			width: min(60%, 420px);
 			height: 1px;
 			transform-origin: center;
+			transform: scaleX(0);
+			animation: intro-line-in 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 1.25s;
 			background: linear-gradient(
 				90deg,
 				transparent 0%,
@@ -74,12 +117,16 @@
 		.intro-subtitle {
 			@include body-1;
 
+			opacity: 0;
+			animation: intro-item-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.6s;
 			letter-spacing: 0.35em;
 			text-transform: uppercase;
 			color: rgba(255, 255, 255, 0.6);
 		}
 
 		.intro-terminal {
+			opacity: 0;
+			animation: intro-item-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.75s;
 			display: flex;
 			align-items: center;
 			gap: 0.6rem;
@@ -121,8 +168,9 @@
 			}
 		}
 
-		// 기술 태그
 		.intro-tags {
+			opacity: 0;
+			animation: intro-item-in 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.9s;
 			display: flex;
 			gap: 0.6rem;
 			flex-wrap: wrap;
@@ -146,12 +194,13 @@
 			}
 		}
 
-		// 스크롤 인디케이터
 		.intro-scroll-indicator {
 			position: absolute;
 			bottom: 2.5rem;
 			left: 50%;
-			transform: translateX(-50%);
+			opacity: 0;
+			animation: scroll-indicator-appear 0.6s ease forwards 2s,
+				scroll-indicator-bounce 1.5s ease-in-out infinite 2.6s;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -176,13 +225,10 @@
 		}
 	}
 
-	// ──────────────────────────────────────
-	// Animation 섹션
-	// ──────────────────────────────────────
 	.animation-section {
 		flex-direction: column;
 		text-align: center;
-		background-color: rgb(126, 34, 206); // purple-700
+		background-color: rgb(126, 34, 206);
 
 		.animation-content {
 			text-align: center;
@@ -198,7 +244,7 @@
 			font-size: 1.25rem;
 			max-width: 42rem;
 			margin: 0 auto 2rem;
-			color: rgb(243, 232, 255); // purple-100
+			color: rgb(243, 232, 255);
 		}
 
 		.animation-cards {
@@ -207,20 +253,17 @@
 		}
 
 		.animation-card {
-			background: rgba(168, 85, 247, 0.3); // purple-500/30
+			background: rgba(168, 85, 247, 0.3);
 			padding: 2rem;
 			border-radius: 1rem;
 			backdrop-filter: blur(4px);
 		}
 	}
 
-	// ──────────────────────────────────────
-	// Responsive 섹션
-	// ──────────────────────────────────────
 	.responsive-section {
 		flex-direction: column;
 		text-align: center;
-		background-color: rgb(225, 29, 72); // rose-600
+		background-color: rgb(225, 29, 72);
 
 		.responsive-inner {
 			display: flex;
@@ -248,7 +291,7 @@
 
 		.responsive-desc {
 			font-size: 1.25rem;
-			color: rgb(255, 228, 230); // rose-100
+			color: rgb(255, 228, 230);
 		}
 
 		.responsive-mockup {
@@ -285,9 +328,6 @@
 		}
 	}
 
-	// ──────────────────────────────────────
-	// CTA 섹션
-	// ──────────────────────────────────────
 	.cta-section {
 		background-color: var(--color-black);
 
