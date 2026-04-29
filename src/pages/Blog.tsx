@@ -1,33 +1,29 @@
 import { Helmet } from 'react-helmet-async';
 import { useQuery } from '@tanstack/react-query';
 import { BlogCardList } from '@/components/blog/BlogCardList';
-import { Spinner } from '@/components/common/Spinner';
 import { fetchVelogPostsFromRSS } from '@/services/velog';
 import useInfiniteScroll from '@/hooks/useInfiniteScroll';
 import './../assets/styles/pages/blog.scss';
-import { Button } from '@/components/common/Button';
 import type { VelogPost } from '@/types/velog';
 
 const VELOG_USERNAME = 'chanseong';
 
 export default function BlogPage() {
-	const { data, isLoading, error } = useQuery({
-		queryKey: ['velogPosts', VELOG_USERNAME],
+	const { data, isFetching, error } = useQuery({
+		queryKey: ['post', 'velog', VELOG_USERNAME],
 		queryFn: () => fetchVelogPostsFromRSS(VELOG_USERNAME),
 		staleTime: 24 * 60 * 60 * 1000,
 		gcTime: 24 * 60 * 60 * 1000
 	});
 
-	const {
-		displayedItems,
-		hasMore,
-		targetRef,
-		isLoading: isLoadingMore
-	} = useInfiniteScroll<VelogPost, HTMLButtonElement>({
+	const { displayedItems, hasMore, targetRef } = useInfiniteScroll<
+		VelogPost,
+		HTMLDivElement
+	>({
 		items: data || [],
 		initialCount: 4,
 		loadMoreCount: 4,
-		trigger: 'click'
+		trigger: 'observe'
 	});
 
 	return (
@@ -41,12 +37,6 @@ export default function BlogPage() {
 				</header>
 
 				<div className="blog-contents">
-					{isLoading && (
-						<div className="contents-loading">
-							<Spinner />
-						</div>
-					)}
-
 					{error && (
 						<div className="contents-error">
 							<p>블로그 글을 불러오는데 실패했습니다.</p>
@@ -54,25 +44,12 @@ export default function BlogPage() {
 						</div>
 					)}
 
-					{displayedItems && displayedItems.length > 0 && (
-						<>
-							<BlogCardList posts={displayedItems} />
-
-							{hasMore && (
-								<div className="button-wrap">
-									<Button className="more-button" variant="outlined" fill ref={targetRef}>
-										{isLoadingMore ? (
-											<div>
-												<Spinner />
-											</div>
-										) : (
-											'More'
-										)}
-									</Button>
-								</div>
-							)}
-						</>
-					)}
+					<BlogCardList
+						posts={displayedItems}
+						hasMore={hasMore}
+						observeRef={targetRef}
+						isFetching={isFetching}
+					/>
 
 					{data && data.length === 0 && (
 						<div className="empty">

@@ -28,11 +28,11 @@ export default function HomePage() {
 						<div className="intro-content">
 							<div className="intro-bracket-wrap">
 								<span className="intro-bracket font-bebasNeue">{'{'}</span>
-								<h1>
+								<h1 className="logo -mb-18">
 									<Splitting
 										className="intro-title font-bebasNeue"
 										animation="slide-vertical"
-										trigger="hover"
+										trigger="view"
 										alternate>
 										<span>SEONG CHAN</span>
 										<span>SMART CODE</span>
@@ -43,9 +43,7 @@ export default function HomePage() {
 
 							<div className="intro-line" />
 
-							<p className="intro-subtitle font-heebo">
-								Frontend Developer Portfolio
-							</p>
+							<p className="intro-subtitle font-heebo">Frontend Developer Portfolio</p>
 
 							<div className="intro-terminal">
 								<span className="intro-terminal-prompt">{'>'}_</span>

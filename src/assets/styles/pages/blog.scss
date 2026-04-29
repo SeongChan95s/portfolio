@@ -1,9 +1,10 @@
 .blog {
+	container-name: blog-page;
 	&-header {
 		padding: 12vw var(--inner) 0 var(--inner);
 
 		&-title {
-			font-size: clamp(32px, 7.292vw, 82px);
+			font-size: clamp(36px, 11cqw, 82px);
 			letter-spacing: -0.025em;
 			font-weight: 700;
 		}
@@ -12,10 +13,6 @@
 	&-contents {
 		border-top: 1px solid var(--color-gray-300);
 		margin-top: 24px;
-
-		.button-wrap {
-			margin: 36px 16px 0;
-		}
 	}
 }
 

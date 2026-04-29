@@ -1,13 +1,13 @@
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/NotFound';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import GuideLayout from './layouts/GuideLayout';
 import MainLayout from './layouts/MainLayout';
-import DetailPage from './pages/DetailPage';
-import AboutPage from './pages/AboutPage';
-import HomePage from './pages/HomePage';
-import ProjectPage from './pages/ProjectPage';
-import BlogPage from './pages/BlogPage';
-import ContactPage from './pages/ContactPage';
+import DetailPage from './pages/Detail';
+import AboutPage from './pages/About';
+import HomePage from './pages/Home';
+import ProjectPage from './pages/Project';
+import BlogPage from './pages/Blog';
+import ContactPage from './pages/Contact';
 import { lazy } from 'react';
 import SubLayout from './layouts/SubLayout';
 
@@ -53,15 +53,6 @@ const router = createBrowserRouter([
 			}
 		]
 	},
-	// {
-	// 	element: <SubLayout />,
-	// 	children: [
-	// 		{
-	// 			path: '/project/:id',
-	// 			element: <DetailPage />
-	// 		}
-	// 	]
-	// },
 	{
 		element: <GuideLayout />,
 		path: '/guide',

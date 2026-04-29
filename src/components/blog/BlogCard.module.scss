@@ -1,25 +1,7 @@
-.blog-card-list {
-	:global(.swiper-wrapper) {
-		display: block;
-		@include lg {
-			display: flex;
-		}
-	}
-}
-
 .card {
-	height: auto;
-
-	~ .card {
-		border-top: 1px solid var(--color-gray-300);
-		margin-top: 42px;
-	}
-
-	&-link {
-		display: flex;
-		flex-direction: column;
-		height: 100%;
-	}
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 
 	&-thumbnail {
 		flex: none;
@@ -39,21 +21,20 @@
 
 		.title {
 			font-size: 15px;
-			@include text-wrap(2);
+			@include text-wrap(1);
 		}
 
 		.description {
 			margin-top: 12px;
 			font-size: 11.5px;
 			font-weight: 400;
-			@include text-wrap(3);
+			@include text-wrap(2);
 			color: var(--color-gray-600);
 		}
 
 		.bottom {
-			margin-top: 32px;
+			margin-top: 18px;
 			.date {
-				margin-top: 9px;
 				display: block;
 				font-size: 12px;
 			}
@@ -63,17 +44,6 @@
 
 @include lg {
 	.card {
-		width: 32%;
-		border-left: 1px solid var(--color-gray-300);
-
-		&:last-child {
-			border-right: 1px solid var(--color-gray-300);
-		}
-
-		~ .card {
-			margin-top: 0;
-		}
-
 		&-link {
 			padding: 3.4%;
 		}
@@ -84,7 +54,7 @@
 		}
 
 		&-content {
-			padding: 0;
+			padding-bottom: 32px;
 			.title {
 				font-size: 17px;
 				font-weight: 500;

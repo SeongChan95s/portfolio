@@ -1,15 +1,25 @@
 import type { VelogPost } from '@/types/velog';
-import styles from './BlogCard.module.scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import type { SwiperOptions } from 'swiper/types';
 import 'swiper/swiper-bundle.css';
 import { useMatchMediaStore } from '@/stores/useMatchMediaStore';
+import { BlogCard } from './BlogCard';
+import styles from './BlogCardList.module.scss';
+import { Skeleton } from '../common/Skeleton';
 
-interface BlogCardProps {
+interface BlogCardListProps {
 	posts: VelogPost[];
+	hasMore: boolean;
+	observeRef: React.RefObject<HTMLDivElement | null>;
+	isFetching: boolean;
 }
 
-export function BlogCardList({ posts }: BlogCardProps) {
+export function BlogCardList({
+	posts,
+	hasMore,
+	isFetching,
+	observeRef
+}: BlogCardListProps) {
 	const swiperOptions: SwiperOptions = {
 		slidesPerView: 'auto',
 		spaceBetween: 0,
@@ -23,44 +33,45 @@ export function BlogCardList({ posts }: BlogCardProps) {
 
 	return (
 		<div className={styles.blogCardList}>
-			{posts && posts.length > 0 && (
-				<Swiper className={styles.swiper} {...swiperOptions}>
-					{posts.map(post => (
-						<SwiperSlide className={styles.card} key={post.id}>
-							<a
-								href={`https://velog.io/@${post.user.username}/${post.url_slug}`}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={styles.cardLink}>
-								<div className={styles.cardThumbnail}>
-									{post.thumbnail ? (
-										<img src={post.thumbnail} alt={post.title} />
-									) : (
-										<div className={styles.placeholder}>
-											<span>{post.title.charAt(0)}</span>
-										</div>
-									)}
-								</div>
-								<div className={styles.cardContent}>
-									<h5 className={styles.title}>{post.title}</h5>
-									<p className={styles.description}>
-										{post.short_description || '설명이 없습니다.'}
-									</p>
-									<div className={styles.bottom}>
-										<time className={styles.date}>
-											{new Date(post.released_at)
-												.toLocaleString()
-												.split('.')
-												.slice(0, 3)
-												.join('.')}
-										</time>
-									</div>
-								</div>
-							</a>
+			<Swiper className={styles.swiper} {...swiperOptions}>
+				{posts.map(post => (
+					<SwiperSlide className={styles.slide} key={post.id}>
+						<BlogCard post={post} />
+					</SwiperSlide>
+				))}
+
+				{isFetching && (
+					<>
+						<SwiperSlide className={styles.slide}>
+							<BlogCardSkeleton />
 						</SwiperSlide>
-					))}
-				</Swiper>
-			)}
+						<SwiperSlide className={styles.slide}>
+							<BlogCardSkeleton />
+						</SwiperSlide>
+						<SwiperSlide className={styles.slide}>
+							<BlogCardSkeleton />
+						</SwiperSlide>
+						<SwiperSlide className={styles.slide}>
+							<BlogCardSkeleton />
+						</SwiperSlide>
+					</>
+				)}
+				{hasMore && (
+					<SwiperSlide className={styles.slide}>
+						<BlogCardSkeleton ref={observeRef} />
+					</SwiperSlide>
+				)}
+			</Swiper>
+		</div>
+	);
+}
+
+function BlogCardSkeleton({ ref }: { ref?: React.RefObject<HTMLDivElement | null> }) {
+	return (
+		<div ref={ref}>
+			<Skeleton className={styles.skeletonThumbnail} variant="rect" />
+			<Skeleton className={styles.skeletonTitle} fontSize="17" />
+			<Skeleton className={styles.skeletonBody} fontSize="11" count={2} />
 		</div>
 	);
 }
